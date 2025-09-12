@@ -15,20 +15,22 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #e0e0e0;
+            background: #0a0a0a;
             overflow-x: hidden;
         }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, #1a365d 0%, #2b77ad 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2a1a2a 100%);
             color: white;
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         nav {
@@ -46,6 +48,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: #00ffff;
         }
 
         .canada-flag {
@@ -66,11 +69,12 @@
         }
 
         .nav-links a:hover {
-            color: #ffd700;
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
         }
 
         .cta-button {
-            background: #ff6b35;
+            background: linear-gradient(135deg, #8a2be2, #9932cc);
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
@@ -79,16 +83,18 @@
             font-weight: 600;
             transition: all 0.3s ease;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
         }
 
         .cta-button:hover {
-            background: #e55a2b;
+            background: linear-gradient(135deg, #9932cc, #ba55d3);
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #1a365d 0%, #2b77ad 50%, #4a90c2 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #2a1a2a 50%, #1a1a2a 75%, #0a0a0a 100%);
             color: white;
             padding: 8rem 2rem 4rem;
             text-align: center;
@@ -103,8 +109,18 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.4;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.1) 0%, rgba(0, 255, 255, 0.05) 50%, transparent 100%);
         }
 
         .hero-content {
@@ -119,6 +135,11 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #00ffff 50%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
         .hero .subtitle {
@@ -126,6 +147,7 @@
             margin-bottom: 1rem;
             opacity: 0.95;
             font-weight: 300;
+            color: #00ffff;
         }
 
         .hero .description {
@@ -135,6 +157,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            color: #e0e0e0;
         }
 
         .hero-ctas {
@@ -146,7 +169,7 @@
         }
 
         .cta-primary {
-            background: #ff6b35;
+            background: linear-gradient(135deg, #8a2be2 0%, #9932cc 50%, #ba55d3 100%);
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -155,46 +178,49 @@
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 4px 20px rgba(138, 43, 226, 0.4);
         }
 
         .cta-primary:hover {
-            background: #e55a2b;
+            background: linear-gradient(135deg, #9932cc 0%, #ba55d3 50%, #dda0dd 100%);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 8px 30px rgba(138, 43, 226, 0.6);
         }
 
         .cta-secondary {
             background: transparent;
-            color: white;
+            color: #00ffff;
             padding: 1rem 2rem;
-            border: 2px solid white;
+            border: 2px solid #00ffff;
             border-radius: 8px;
             font-size: 1.1rem;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
 
         .cta-secondary:hover {
-            background: white;
-            color: #1a365d;
+            background: #00ffff;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
         }
 
         .canadian-badge {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
             display: inline-block;
             margin-top: 1rem;
+            color: #00ffff;
         }
 
         /* Problem Section */
         .problem {
             padding: 4rem 2rem;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
         }
 
         .problem-content {
@@ -205,8 +231,12 @@
 
         .problem h2 {
             font-size: 2.5rem;
-            color: #1a365d;
+            color: #ffffff;
             margin-bottom: 2rem;
+            background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .pain-points {
@@ -217,11 +247,12 @@
         }
 
         .pain-point {
-            background: white;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a2a 100%);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border-left: 4px solid #ff6b35;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #8a2be2;
+            border: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .pain-point-icon {
@@ -230,17 +261,23 @@
         }
 
         .pain-point h3 {
-            color: #1a365d;
+            color: #00ffff;
             margin-bottom: 1rem;
             font-size: 1.3rem;
         }
 
+        .pain-point p {
+            color: #e0e0e0;
+        }
+
         .stats {
-            background: #1a365d;
+            background: linear-gradient(135deg, #000000 0%, #2a1a2a 50%, #1a1a2a 100%);
             color: white;
             padding: 3rem 2rem;
             margin: 2rem 0;
             border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .stats-grid {
@@ -257,14 +294,15 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #ffd700;
+            color: #00ffff;
             display: block;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
         /* Solution Section */
         .solution {
             padding: 4rem 2rem;
-            background: white;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2a 50%, #0a0a0a 100%);
         }
 
         .solution-content {
@@ -274,9 +312,13 @@
 
         .solution h2 {
             font-size: 2.5rem;
-            color: #1a365d;
+            color: #ffffff;
             text-align: center;
             margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .solution-grid {
@@ -288,8 +330,12 @@
 
         .solution-text h3 {
             font-size: 1.8rem;
-            color: #1a365d;
+            color: #00ffff;
             margin-bottom: 1rem;
+        }
+
+        .solution-text p {
+            color: #e0e0e0;
         }
 
         .solution-features {
@@ -301,25 +347,32 @@
             padding: 0.5rem 0;
             position: relative;
             padding-left: 2rem;
+            color: #e0e0e0;
         }
 
         .solution-features li::before {
             content: "✓";
-            color: #ff6b35;
+            color: #8a2be2;
             font-weight: bold;
             position: absolute;
             left: 0;
         }
 
         .demo-preview {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a2a 100%);
             border-radius: 10px;
             padding: 2rem;
-            border: 2px solid #e9ecef;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .demo-preview h4 {
+            color: #00ffff;
+            margin-bottom: 1rem;
         }
 
         .demo-screen {
-            background: #1a1a1a;
+            background: #000000;
             border-radius: 8px;
             padding: 1.5rem;
             font-family: 'Courier New', monospace;
@@ -327,10 +380,15 @@
             font-size: 0.9rem;
             line-height: 1.4;
             margin-bottom: 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .demo-screen div:first-child {
+            color: #00ffff;
         }
 
         .typing-indicator {
-            color: #ffd700;
+            color: #8a2be2;
             animation: blink 1.5s infinite;
         }
 
@@ -342,7 +400,7 @@
         /* Industries Section */
         .industries {
             padding: 4rem 2rem;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
         }
 
         .industries-content {
@@ -352,9 +410,13 @@
 
         .industries h2 {
             font-size: 2.5rem;
-            color: #1a365d;
+            color: #ffffff;
             text-align: center;
             margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .industry-grid {
@@ -364,17 +426,19 @@
         }
 
         .industry-card {
-            background: white;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a2a 100%);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            border-top: 4px solid #ff6b35;
+            border-top: 4px solid #8a2be2;
+            border: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .industry-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.4);
         }
 
         .industry-icon {
@@ -384,9 +448,13 @@
         }
 
         .industry-card h3 {
-            color: #1a365d;
+            color: #00ffff;
             margin-bottom: 1rem;
             font-size: 1.2rem;
+        }
+
+        .industry-card p {
+            color: #e0e0e0;
         }
 
         .remote-badge {
@@ -402,7 +470,7 @@
         /* Security Section */
         .security {
             padding: 4rem 2rem;
-            background: #1a365d;
+            background: linear-gradient(135deg, #000000 0%, #2a1a2a 50%, #1a1a2a 100%);
             color: white;
         }
 
@@ -415,6 +483,10 @@
         .security h2 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
+            background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .security-features {
@@ -425,10 +497,16 @@
         }
 
         .security-feature {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.05);
             padding: 2rem;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .security-feature:hover {
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            background: rgba(138, 43, 226, 0.05);
         }
 
         .security-icon {
@@ -437,12 +515,21 @@
             display: block;
         }
 
+        .security-feature h3 {
+            color: #00ffff;
+        }
+
+        .security-feature p {
+            color: #e0e0e0;
+        }
+
         /* Guarantee Section */
         .guarantee {
             padding: 3rem 2rem;
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: linear-gradient(135deg, #8a2be2, #9932cc, #ba55d3);
             color: white;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
         }
 
         .guarantee-content {
@@ -471,7 +558,7 @@
         /* CTA Section */
         .final-cta {
             padding: 4rem 2rem;
-            background: white;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2a 50%, #0a0a0a 100%);
             text-align: center;
         }
 
@@ -482,8 +569,16 @@
 
         .final-cta h2 {
             font-size: 2.5rem;
-            color: #1a365d;
+            color: #ffffff;
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00ffff 0%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .final-cta p {
+            color: #e0e0e0;
         }
 
         .contact-options {
@@ -494,23 +589,33 @@
         }
 
         .contact-card {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a2a 100%);
             padding: 2rem;
             border-radius: 10px;
-            border: 2px solid #e9ecef;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-card:hover {
+            border: 2px solid rgba(138, 43, 226, 0.4);
         }
 
         .contact-card h3 {
-            color: #1a365d;
+            color: #00ffff;
             margin-bottom: 1rem;
+        }
+
+        .contact-card p {
+            color: #e0e0e0;
         }
 
         /* Footer */
         footer {
-            background: #1a365d;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             color: white;
             padding: 2rem;
             text-align: center;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         .footer-content {
@@ -671,9 +776,9 @@
                 </div>
                 
                 <div class="demo-preview">
-                    <h4 style="margin-bottom: 1rem; color: #1a365d;">Live Demo Preview</h4>
+                    <h4 style="margin-bottom: 1rem; color: #00ffff;">Live Demo Preview</h4>
                     <div class="demo-screen">
-                        <div style="color: #fff;">You: How do I troubleshoot hydraulic pressure loss on CAT 320D?</div>
+                        <div style="color: #00ffff;">You: How do I troubleshoot hydraulic pressure loss on CAT 320D?</div>
                         <div style="margin: 1rem 0; color: #888;">🤖 IntraMind is thinking...</div>
                         <div style="color: #00ff00;">Based on CAT 320D Service Manual Section 7.3:</div>
                         <div style="color: #00ff00; margin: 0.5rem 0;">
@@ -682,10 +787,10 @@
                             3. Test pilot control pressure (30 bar)<br>
                             4. Check for external leaks at cylinder seals
                         </div>
-                        <div style="color: #ffd700;">⚠️  Safety: Lock out equipment before inspection</div>
+                        <div style="color: #8a2be2;">⚠️  Safety: Lock out equipment before inspection</div>
                         <div class="typing-indicator">▋</div>
                     </div>
-                    <p style="font-size: 0.9rem; color: #666; text-align: center;">
+                    <p style="font-size: 0.9rem; color: #888; text-align: center;">
                         Instant access to your technical documentation
                     </p>
                 </div>
@@ -815,14 +920,14 @@
                 </div>
             </div>
             
-            <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
-                <h3 style="color: #1a365d; margin-bottom: 1rem;">🇨🇦 Canadian Business, Canadian Values</h3>
-                <p>IntraMind is proudly developed in Canada, for Canadian businesses. We understand the importance of data sovereignty, privacy, and reliable solutions that work in our diverse geographic landscape.</p>
+            <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2a1a2a 100%); border-radius: 10px; border: 1px solid rgba(0, 255, 255, 0.2);">
+                <h3 style="color: #00ffff; margin-bottom: 1rem;">🇨🇦 Canadian Business, Canadian Values</h3>
+                <p style="color: #e0e0e0;">IntraMind is proudly developed in Canada, for Canadian businesses. We understand the importance of data sovereignty, privacy, and reliable solutions that work in our diverse geographic landscape.</p>
                 
                 <div style="margin-top: 2rem;">
-                    <strong>Contact us:</strong><br>
-                    📧 <a href="mailto:sales@intramind.ca">sales@intramind.ca</a><br>
-                    🌐 Serving businesses across Canada
+                    <strong style="color: #00ffff;">Contact us:</strong><br>
+                    📧 <a href="mailto:sales@intramind.ca" style="color: #8a2be2; text-decoration: none;">sales@intramind.ca</a><br>
+                    🌐 <span style="color: #e0e0e0;">Serving businesses across Canada</span>
                 </div>
             </div>
         </div>
@@ -830,5 +935,79 @@
 
     <footer>
         <div class="footer-content">
-            <div class="logo">🧠 IntraMind 🍁</div>
-            <p
+            <span class="logo">IntraMind</span>
+            <p style="margin: 1rem 0;">Your Technical Knowledge, Instantly Accessible, Completely Private.</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">
+                © 2025 IntraMind. Proudly Canadian. Enterprise AI solutions for documentation-heavy industries.
+            </p>
+            <div style="margin-top: 1rem;">
+                <a href="mailto:sales@intramind.ca" style="color: #00ffff; text-decoration: none;">
+                    📧 sales@intramind.ca
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation classes on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.pain-point, .industry-card, .security-feature');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+
+        // Dynamic typing effect for demo
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize demo animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const demoElement = document.querySelector('.typing-indicator');
+            if (demoElement) {
+                // Add some interactive demo behavior if needed
+                setInterval(() => {
+                    demoElement.style.opacity = demoElement.style.opacity === '0' ? '1' : '0';
+                }, 800);
+            }
+        });
+    </script>
+</body>
+</html>
