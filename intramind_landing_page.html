@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntraMind - Your Documentation, Instantly Accessible | Canadian AI Solutions</title>
-    <meta name="description" content="Stop wasting hours searching through documentation. IntraMind's secure, on-premise AI assistant instantly answers your team's questions using your internal knowledge base. Developed in Canada.">
+    <title>IntraMind - Coming Soon</title>
     <style>
         * {
             margin: 0;
@@ -14,821 +13,185 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #1a365d 0%, #2b77ad 100%);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #2a1a2a 50%, #1a1a2a 75%, #0a0a0a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        .canada-flag {
-            font-size: 1.2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #ffd700;
-        }
-
-        .cta-button {
-            background: #ff6b35;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            background: #e55a2b;
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #1a365d 0%, #2b77ad 50%, #4a90c2 100%);
-            color: white;
-            padding: 8rem 2rem 4rem;
-            text-align: center;
+            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
+        body::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
             opacity: 0.3;
         }
 
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
+        .container {
+            text-align: center;
+            padding: 2rem;
             position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.95;
-            font-weight: 300;
-        }
-
-        .hero .description {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
+            z-index: 1;
             max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .hero-ctas {
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #00ffff 50%, #8a2be2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.5));
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #00ffff;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .loading-dots {
             display: flex;
-            gap: 1.5rem;
             justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
+            gap: 0.5rem;
+            margin: 2rem 0;
         }
 
-        .cta-primary {
-            background: #ff6b35;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #8a2be2;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: -0.16s;
+            background: #00ffff;
+        }
+
+        .dot:nth-child(3) {
+            background: #8a2be2;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        .info {
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info p {
+            margin-bottom: 1rem;
             font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
         }
 
-        .cta-primary:hover {
-            background: #e55a2b;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        .contact {
+            margin-top: 2rem;
+            font-size: 1rem;
         }
 
-        .cta-secondary {
-            background: transparent;
-            color: white;
-            padding: 1rem 2rem;
-            border: 2px solid white;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+        .contact a {
+            color: #8a2be2;
             text-decoration: none;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
-        .cta-secondary:hover {
-            background: white;
-            color: #1a365d;
+        .contact a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
         }
 
         .canadian-badge {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 2rem;
             padding: 0.5rem 1rem;
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             border-radius: 20px;
-            font-size: 0.9rem;
             display: inline-block;
-            margin-top: 1rem;
-        }
-
-        /* Problem Section */
-        .problem {
-            padding: 4rem 2rem;
-            background: #f8f9fa;
-        }
-
-        .problem-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .problem h2 {
-            font-size: 2.5rem;
-            color: #1a365d;
-            margin-bottom: 2rem;
-        }
-
-        .pain-points {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .pain-point {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border-left: 4px solid #ff6b35;
-        }
-
-        .pain-point-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .pain-point h3 {
-            color: #1a365d;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .stats {
-            background: #1a365d;
-            color: white;
-            padding: 3rem 2rem;
-            margin: 2rem 0;
-            border-radius: 10px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat {
-            padding: 1rem;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffd700;
-            display: block;
-        }
-
-        /* Solution Section */
-        .solution {
-            padding: 4rem 2rem;
-            background: white;
-        }
-
-        .solution-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .solution h2 {
-            font-size: 2.5rem;
-            color: #1a365d;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .solution-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .solution-text h3 {
-            font-size: 1.8rem;
-            color: #1a365d;
-            margin-bottom: 1rem;
-        }
-
-        .solution-features {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        .solution-features li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .solution-features li::before {
-            content: "✓";
-            color: #ff6b35;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        .demo-preview {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 2rem;
-            border: 2px solid #e9ecef;
-        }
-
-        .demo-screen {
-            background: #1a1a1a;
-            border-radius: 8px;
-            padding: 1.5rem;
-            font-family: 'Courier New', monospace;
-            color: #00ff00;
+            color: #8a2be2;
             font-size: 0.9rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
         }
 
-        .typing-indicator {
-            color: #ffd700;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Industries Section */
-        .industries {
-            padding: 4rem 2rem;
-            background: #f8f9fa;
-        }
-
-        .industries-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .industries h2 {
-            font-size: 2.5rem;
-            color: #1a365d;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .industry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .industry-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border-top: 4px solid #ff6b35;
-        }
-
-        .industry-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .industry-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .industry-card h3 {
-            color: #1a365d;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .remote-badge {
-            background: #28a745;
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 10px;
-            margin-left: 0.5rem;
-            font-weight: 600;
-        }
-
-        /* Security Section */
-        .security {
-            padding: 4rem 2rem;
-            background: #1a365d;
-            color: white;
-        }
-
-        .security-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .security h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .security-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .security-feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .security-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        /* Guarantee Section */
-        .guarantee {
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            text-align: center;
-        }
-
-        .guarantee-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .guarantee h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .guarantee-badge {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 2rem auto;
-            font-size: 2.5rem;
-        }
-
-        /* CTA Section */
-        .final-cta {
-            padding: 4rem 2rem;
-            background: white;
-            text-align: center;
-        }
-
-        .final-cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .final-cta h2 {
-            font-size: 2.5rem;
-            color: #1a365d;
-            margin-bottom: 1rem;
-        }
-
-        .contact-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .contact-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-        }
-
-        .contact-card h3 {
-            color: #1a365d;
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #1a365d;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .logo {
+                font-size: 3rem;
             }
-
-            .hero h1 {
-                font-size: 2.5rem;
+            
+            h1 {
+                font-size: 2rem;
             }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
+            
+            .subtitle {
+                font-size: 1.1rem;
             }
-
-            .hero-ctas {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .solution-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .demo-screen {
-                font-size: 0.8rem;
-            }
-
-            .pain-points,
-            .industry-grid,
-            .security-features {
-                grid-template-columns: 1fr;
+            
+            .info p {
+                font-size: 1rem;
             }
         }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-delay-1 { animation-delay: 0.2s; }
-        .animate-delay-2 { animation-delay: 0.4s; }
-        .animate-delay-3 { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                🧠 IntraMind <span class="canada-flag">🍁</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#solution">Solution</a></li>
-                <li><a href="#industries">Industries</a></li>
-                <li><a href="#security">Security</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <a href="mailto:sales@intramind.ca?subject=Demo Request" class="cta-button">Get Free Demo</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="fade-in">Stop Searching. Start Asking.</h1>
-            <p class="subtitle fade-in animate-delay-1">Your team's documentation, instantly accessible through AI</p>
-            <p class="description fade-in animate-delay-2">
-                Transform hours of manual documentation searches into instant, intelligent answers. 
-                IntraMind learns your company's knowledge base and provides secure, on-premise AI assistance 
-                that keeps your sensitive data exactly where it belongs - in your control.
-            </p>
-            <div class="hero-ctas fade-in animate-delay-3">
-                <a href="mailto:sales@intramind.ca?subject=Free Demo Request&body=Hi, I'm interested in seeing a free demo of IntraMind for my business. Please contact me to schedule." class="cta-primary">
-                    Get Your Free Demo
-                </a>
-                <a href="mailto:sales@intramind.ca?subject=Custom Quote Request" class="cta-secondary">
-                    Request Custom Quote
-                </a>
-            </div>
-            <div class="canadian-badge fade-in animate-delay-3">
-                🍁 Proudly Developed in Canada 🍁
-            </div>
+    <div class="container">
+        <div class="logo">IntraMind</div>
+        
+        <h1>We're Learning...</h1>
+        
+        <p class="subtitle">Our AI is currently being trained on something amazing</p>
+        
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
         </div>
-    </section>
-
-    <section class="problem">
-        <div class="problem-content">
-            <h2>How Much Time Does Your Team Waste Every Day?</h2>
-            <div class="stats">
-                <div class="stats-grid">
-                    <div class="stat">
-                        <span class="stat-number">2-4</span>
-                        <span>Hours per day searching documentation</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">$500+</span>
-                        <span>Cost per hour of equipment downtime</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">73%</span>
-                        <span>Of employees struggle to find information</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pain-points">
-                <div class="pain-point">
-                    <div class="pain-point-icon">⏰</div>
-                    <h3>Endless Documentation Searches</h3>
-                    <p>Your skilled technicians spend more time hunting through manuals than actually fixing problems. Every minute counts when equipment is down.</p>
-                </div>
-                <div class="pain-point">
-                    <div class="pain-point-icon">🌐</div>
-                    <h3>Remote Location Challenges</h3>
-                    <p>No internet? No problem for your operations, but a huge problem for accessing cloud-based knowledge systems when you need them most.</p>
-                </div>
-                <div class="pain-point">
-                    <div class="pain-point-icon">🔒</div>
-                    <h3>Security & Compliance Concerns</h3>
-                    <p>Your sensitive procedures, proprietary information, and compliance data can't risk exposure through cloud-based AI systems.</p>
-                </div>
-            </div>
+        
+        <div class="info">
+            <p><strong style="color: #00ffff;">IntraMind is coming soon.</strong></p>
+            <p>Your intelligent EBMS assistant that helps you learn and navigate the system.</p>
+            <p style="font-size: 0.95rem; opacity: 0.8;">Ask questions about EBMS features, get step-by-step guidance, and find answers instantly - no more digging through manuals.</p>
         </div>
-    </section>
-
-    <section class="solution" id="solution">
-        <div class="solution-content">
-            <h2>Meet IntraMind: Your Intelligent Documentation Assistant</h2>
-            <div class="solution-grid">
-                <div class="solution-text">
-                    <h3>Ask Questions, Get Instant Answers</h3>
-                    <p>Instead of searching through thousands of pages, simply ask IntraMind natural questions about your procedures, equipment, or processes. Get precise, contextual answers in seconds.</p>
-                    
-                    <ul class="solution-features">
-                        <li>Learns from your existing documentation, manuals, and procedures</li>
-                        <li>Works completely offline - perfect for remote locations</li>
-                        <li>Secure, on-premise deployment - your data never leaves your facility</li>
-                        <li>Real-time streaming responses with transparent reasoning</li>
-                        <li>Custom hardware included - turnkey solution</li>
-                        <li>Canadian-developed with enterprise-grade security</li>
-                    </ul>
-
-                    <p><strong>See the AI think:</strong> IntraMind shows you exactly how it arrived at each answer, building trust and understanding with your team.</p>
-                </div>
-                
-                <div class="demo-preview">
-                    <h4 style="margin-bottom: 1rem; color: #1a365d;">Live Demo Preview</h4>
-                    <div class="demo-screen">
-                        <div style="color: #fff;">You: How do I troubleshoot hydraulic pressure loss on CAT 320D?</div>
-                        <div style="margin: 1rem 0; color: #888;">🤖 IntraMind is thinking...</div>
-                        <div style="color: #00ff00;">Based on CAT 320D Service Manual Section 7.3:</div>
-                        <div style="color: #00ff00; margin: 0.5rem 0;">
-                            1. Check hydraulic fluid level (min 75%)<br>
-                            2. Inspect main relief valve (340 bar setting)<br>
-                            3. Test pilot control pressure (30 bar)<br>
-                            4. Check for external leaks at cylinder seals
-                        </div>
-                        <div style="color: #ffd700;">⚠️  Safety: Lock out equipment before inspection</div>
-                        <div class="typing-indicator">▋</div>
-                    </div>
-                    <p style="font-size: 0.9rem; color: #666; text-align: center;">
-                        Instant access to your technical documentation
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="industries" id="industries">
-        <div class="industries-content">
-            <h2>Perfect for Documentation-Heavy Industries</h2>
-            <div class="industry-grid">
-                <div class="industry-card">
-                    <span class="industry-icon">🚛</span>
-                    <h3>Heavy Machinery & Diesel <span class="remote-badge">REMOTE</span></h3>
-                    <p>Service manuals, diagnostic procedures, parts catalogs for CAT, John Deere, Komatsu equipment. Critical for field repairs.</p>
-                </div>
-                
-                <div class="industry-card">
-                    <span class="industry-icon">✈️</span>
-                    <h3>Aviation Maintenance <span class="remote-badge">REMOTE</span></h3>
-                    <p>Aircraft maintenance manuals, AD compliance, parts documentation. Safety-critical with strict regulatory requirements.</p>
-                </div>
-                
-                <div class="industry-card">
-                    <span class="industry-icon">⚓</span>
-                    <h3>Marine Maintenance <span class="remote-badge">REMOTE</span></h3>
-                    <p>Ship engine manuals, navigation equipment guides, safety procedures. Often performed in remote ports or at sea.</p>
-                </div>
-                
-                <div class="industry-card">
-                    <span class="industry-icon">🏭</span>
-                    <h3>Industrial Equipment</h3>
-                    <p>Manufacturing equipment manuals, troubleshooting guides, safety protocols for complex industrial machinery.</p>
-                </div>
-                
-                <div class="industry-card">
-                    <span class="industry-icon">🛢️</span>
-                    <h3>Oil & Gas Operations <span class="remote-badge">REMOTE</span></h3>
-                    <p>Equipment manuals, safety procedures, regulatory compliance documentation for remote drilling and processing sites.</p>
-                </div>
-                
-                <div class="industry-card">
-                    <span class="industry-icon">⚖️</span>
-                    <h3>Legal & Professional Services</h3>
-                    <p>Case law, legal precedents, compliance documentation, and sensitive case files requiring complete privacy.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="security" id="security">
-        <div class="security-content">
-            <h2>Your Data. Your Control. Your Security.</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 3rem; opacity: 0.9;">
-                Unlike cloud-based AI solutions, IntraMind operates entirely on your premises. 
-                Your sensitive documentation never leaves your facility.
-            </p>
-            
-            <div class="security-features">
-                <div class="security-feature">
-                    <span class="security-icon">🏢</span>
-                    <h3>100% On-Premise</h3>
-                    <p>Complete local deployment. Your data never touches the cloud or leaves your facility.</p>
-                </div>
-                
-                <div class="security-feature">
-                    <span class="security-icon">🔒</span>
-                    <h3>Enterprise Security</h3>
-                    <p>Audit logging, PII redaction, and compliance-ready security features built in.</p>
-                </div>
-                
-                <div class="security-feature">
-                    <span class="security-icon">🌐</span>
-                    <h3>Works Offline</h3>
-                    <p>Perfect for remote locations, air-gapped environments, or areas with unreliable internet.</p>
-                </div>
-                
-                <div class="security-feature">
-                    <span class="security-icon">🇨🇦</span>
-                    <h3>Canadian Data Sovereignty</h3>
-                    <p>Developed in Canada, deployed in Canada. Your data stays under Canadian privacy laws.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="guarantee">
-        <div class="guarantee-content">
-            <h2>Risk-Free Guarantee</h2>
-            <div class="guarantee-badge">💯</div>
-            <h3>See It Working Before You Pay a Cent</h3>
-            <p style="font-size: 1.2rem; margin: 1rem 0;">
-                We'll create a custom demo with your actual documentation. If you're not completely satisfied 
-                with how IntraMind transforms your workflow, you keep your money. No questions asked.
-            </p>
-            <p style="font-size: 1rem; opacity: 0.9;">
-                We're confident in our solution because we see the results with every deployment.
-            </p>
-        </div>
-    </section>
-
-    <section class="final-cta" id="contact">
-        <div class="final-cta-content">
-            <h2>Ready to Transform Your Documentation Workflow?</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-                Stop wasting hours searching. Start getting instant answers. 
-                Book your free custom demo today.
-            </p>
-            
-            <div class="contact-options">
-                <div class="contact-card">
-                    <h3>📞 Free Custom Demo</h3>
-                    <p>See IntraMind working with your actual documentation. We'll build a custom demo specifically for your industry and use case.</p>
-                    <a href="mailto:sales@intramind.ca?subject=Free Custom Demo Request&body=Hi, I'd like to schedule a free custom demo of IntraMind. Here are my details:%0D%0A%0D%0ACompany: %0D%0AIndustry: %0D%0AMain challenges: %0D%0APreferred demo time: %0D%0A%0D%0AThank you!" 
-                       class="cta-primary" style="display: inline-block; margin-top: 1rem;">
-                        Book Free Demo
-                    </a>
-                </div>
-                
-                <div class="contact-card">
-                    <h3>💼 Custom Quote</h3>
-                    <p>Get a tailored quote for your specific needs. Hardware, software, installation, and training - we'll design the perfect solution.</p>
-                    <a href="mailto:sales@intramind.ca?subject=Custom Quote Request&body=Hi, I'd like a custom quote for IntraMind. Here are my details:%0D%0A%0D%0ACompany: %0D%0AIndustry: %0D%0ANumber of users: %0D%0ADocument types: %0D%0ASpecial requirements: %0D%0A%0D%0AThank you!" 
-                       class="cta-primary" style="display: inline-block; margin-top: 1rem;">
-                        Get Quote
-                    </a>
-                </div>
-            </div>
-            
-            <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
-                <h3 style="color: #1a365d; margin-bottom: 1rem;">🇨🇦 Canadian Business, Canadian Values</h3>
-                <p>IntraMind is proudly developed in Canada, for Canadian businesses. We understand the importance of data sovereignty, privacy, and reliable solutions that work in our diverse geographic landscape.</p>
-                
-                <div style="margin-top: 2rem;">
-                    <strong>Contact us:</strong><br>
-                    📧 <a href="mailto:sales@intramind.ca">sales@intramind.ca</a><br>
-                    🌐 Serving businesses across Canada
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="logo">🧠 IntraMind 🍁</div>
-            <p
+    </div>
+</body>
+</html>
