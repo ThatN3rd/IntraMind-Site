@@ -138,7 +138,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #BAE6FD 100%);
+            background: var(--bg-white);
             padding: 5rem 2rem 4rem;
             text-align: center;
             position: relative;
@@ -152,8 +152,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(14,165,233,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.5;
+            background: radial-gradient(ellipse at top, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
+            opacity: 1;
         }
 
         .hero-content {
@@ -512,7 +512,7 @@
             <h1>Your AI Assistant for <span class="gradient-text">EBMS</span></h1>
             <p>Built to simplify, teach, and automate. IntraMind helps you master EBMS with instant answers, comprehensive guides, and powerful customizations.</p>
             <div class="hero-buttons">
-                <a href="/chat" class="btn-primary">Get Started</a>
+                <a href="/signup.html" class="btn-primary">Get Started</a>
                 <a href="#features" class="btn-secondary">Explore Features</a>
             </div>
         </div>
