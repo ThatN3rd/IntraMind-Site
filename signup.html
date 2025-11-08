@@ -323,17 +323,25 @@
             e.preventDefault();
 
             // Get form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                company: document.getElementById('company').value
-            };
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
 
-            // Here you would typically send this to your backend
-            console.log('Account request submitted:', formData);
+            // Create email content
+            const subject = encodeURIComponent('IntraMind Account Request');
+            const body = encodeURIComponent(
+                `New account request:\n\n` +
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                `Company: ${company}\n\n` +
+                `Please review and create an account for this user.`
+            );
 
-            // Show success message (you can customize this)
-            alert('Thank you! Your account request has been submitted. We\'ll review it and send you an email once your account is ready.');
+            // Open default email client with pre-filled data
+            window.location.href = `mailto:marc@ebmscanada.com?subject=${subject}&body=${body}`;
+
+            // Show success message
+            alert('Your email client will open with the request. Please send the email to complete your submission.');
 
             // Reset form
             this.reset();
