@@ -33,6 +33,7 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            font-size: clamp(14px, 0.8vw + 0.5rem, 18px);
         }
 
         /* Navigation */
@@ -56,7 +57,7 @@
         }
 
         .nav-logo {
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 1vw + 0.8rem, 1.75rem);
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             background-clip: text;
@@ -74,6 +75,7 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
+            font-size: clamp(0.9rem, 0.7vw + 0.5rem, 1.1rem);
             transition: color 0.3s ease;
         }
 
@@ -102,10 +104,11 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: clamp(0.65rem, 0.8vh + 0.4rem, 1rem) clamp(1.25rem, 1.5vw + 0.8rem, 2rem);
             border-radius: 8px;
             border: none;
             font-weight: 600;
+            font-size: clamp(0.95rem, 0.7vw + 0.5rem, 1.15rem);
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-sm);
@@ -121,10 +124,11 @@
         .btn-secondary {
             background: var(--bg-white);
             color: var(--primary-blue);
-            padding: 0.75rem 1.5rem;
+            padding: clamp(0.65rem, 0.8vh + 0.4rem, 1rem) clamp(1.25rem, 1.5vw + 0.8rem, 2rem);
             border-radius: 8px;
             border: 2px solid var(--primary-blue);
             font-weight: 600;
+            font-size: clamp(0.95rem, 0.7vw + 0.5rem, 1.15rem);
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
@@ -139,7 +143,7 @@
         /* Hero Section */
         .hero {
             background: var(--bg-white);
-            padding: 5rem 2rem 4rem;
+            padding: clamp(3rem, 8vh, 8rem) 2rem clamp(2.5rem, 6vh, 6rem);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -164,11 +168,11 @@
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(2rem, 3vw + 1rem, 4.5rem);
             font-weight: 800;
-            margin-bottom: 1.5rem;
+            margin-bottom: clamp(1rem, 2vh, 2rem);
             color: var(--text-primary);
-            line-height: 1.1;
+            line-height: 1.15;
         }
 
         .hero .gradient-text {
@@ -179,12 +183,13 @@
         }
 
         .hero p {
-            font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+            font-size: clamp(1.05rem, 0.8vw + 0.7rem, 1.5rem);
             color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            max-width: 700px;
+            margin-bottom: clamp(2rem, 3vh, 3.5rem);
+            max-width: 750px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.7;
         }
 
         .hero-buttons {
@@ -207,14 +212,14 @@
         }
 
         .section-header h2 {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-size: clamp(1.75rem, 2vw + 0.8rem, 3rem);
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
         }
 
         .section-header p {
-            font-size: 1.2rem;
+            font-size: clamp(1.05rem, 0.8vw + 0.6rem, 1.35rem);
             color: var(--text-secondary);
         }
 
@@ -287,7 +292,7 @@
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 1vw + 0.7rem, 1.65rem);
             margin-bottom: 1rem;
             color: var(--text-primary);
         }
@@ -296,6 +301,7 @@
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
             line-height: 1.7;
+            font-size: clamp(0.95rem, 0.6vw + 0.5rem, 1.1rem);
         }
 
         .feature-link {
@@ -545,7 +551,7 @@
                 </div>
                 <h3>Learn EBMS Faster</h3>
                 <p>Access our comprehensive knowledge base filled with official EBMS guides, tutorials, and best practices. Learn at your own pace with clear, structured documentation.</p>
-                <a href="/knowledge-base" class="feature-link">
+                <a href="https://koblesystems.com/knowledge" class="feature-link">
                     Browse Knowledge Base →
                 </a>
             </div>
@@ -619,7 +625,7 @@
                 <div class="footer-links">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="/knowledge-base">Knowledge Base</a></li>
+                        <li><a href="https://koblesystems.com/knowledge">Knowledge Base</a></li>
                         <li><a href="/chat">AI Chat</a></li>
                         <li><a href="/customizations">Customizations</a></li>
                     </ul>
