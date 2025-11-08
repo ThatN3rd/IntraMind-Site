@@ -12,37 +12,39 @@
         }
 
         :root {
-            --dark: #1E293B;
+            --primary-blue: #0EA5E9;
+            --primary-cyan: #06B6D4;
+            --dark-blue: #0284C7;
+            --light-blue: #E0F2FE;
+            --bg-light: #FAFAFA;
+            --bg-white: #FFFFFF;
             --text-primary: #1E293B;
             --text-secondary: #64748B;
+            --border-color: #E2E8F0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
-            background: linear-gradient(135deg, #E0F2FE 0%, #BFDBFE 25%, #DDD6FE 75%, #F3E8FF 100%);
-            min-height: 100vh;
-            position: relative;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
-        }
-
-        /* Grain texture overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="300" height="300" filter="url(%23noise)" opacity="0.05"/></svg>');
-            pointer-events: none;
-            z-index: 1;
         }
 
         /* Navigation */
         nav {
-            position: relative;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
             z-index: 100;
-            padding: 1.5rem 3rem;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .nav-container {
@@ -56,12 +58,15 @@
         .nav-logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             align-items: center;
         }
 
@@ -69,101 +74,57 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
             transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--dark);
+            color: var(--primary-blue);
         }
 
         .nav-login-btn {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             color: white;
-            padding: 0.65rem 1.5rem;
+            padding: 0.6rem 1.25rem;
             border-radius: 8px;
+            border: none;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-decoration: none;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
         }
 
         .nav-login-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Main container */
-        .main-wrapper {
-            position: relative;
-            z-index: 2;
-            max-width: 1300px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-
-        /* Hero card */
-        .hero-card {
-            background: white;
-            border-radius: 24px;
-            padding: 5rem 4rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .hero-content {
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            color: var(--dark);
-            margin-bottom: 2rem;
-        }
-
-        .hero p {
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 700px;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            box-shadow: var(--shadow-md);
         }
 
         .btn-primary {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             border: none;
             font-weight: 600;
-            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
             text-decoration: none;
             display: inline-block;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-secondary {
-            background: transparent;
-            color: var(--dark);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            border: 2px solid var(--dark);
+            background: var(--bg-white);
+            color: var(--primary-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--primary-blue);
             font-weight: 600;
-            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
@@ -171,95 +132,164 @@
         }
 
         .btn-secondary:hover {
-            background: rgba(30, 41, 59, 0.05);
+            background: var(--light-blue);
             transform: translateY(-2px);
         }
 
-        .tagline {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #BAE6FD 100%);
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
             position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(14,165,233,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .hero .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1.05rem, 2.5vw, 1.35rem);
             color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .tagline-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--dark);
-            border-radius: 50%;
+        .hero-buttons {
             display: flex;
-            align-items: center;
+            gap: 1rem;
             justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
+            flex-wrap: wrap;
         }
 
-        /* Content cards */
-        .content-card {
-            background: white;
-            border-radius: 24px;
-            padding: 4rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            background: var(--bg-white);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 3.5rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
         }
 
         .section-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
             font-weight: 700;
-            color: var(--dark);
             margin-bottom: 1rem;
+            color: var(--text-primary);
         }
 
         .section-header p {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
         }
 
-        /* Features grid */
         .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
+            gap: 1.75rem;
         }
 
-        .feature-item {
-            text-align: left;
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-cyan));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-icon {
-            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-cyan));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
-            display: block;
         }
 
-        .feature-item h3 {
+        .feature-card h3 {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
 
-        .feature-item p {
+        .feature-card p {
             color: var(--text-secondary);
+            margin-bottom: 1.5rem;
             line-height: 1.7;
-            margin-bottom: 1rem;
         }
 
         .feature-link {
-            color: var(--dark);
+            color: var(--primary-blue);
             text-decoration: none;
             font-weight: 600;
             display: inline-flex;
@@ -272,41 +302,41 @@
             gap: 0.75rem;
         }
 
-        .feature-link.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
         .badge {
             display: inline-block;
-            background: #FEF3C7;
+            background: linear-gradient(135deg, #FEF3C7, #FCD34D);
             color: #92400E;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-left: 0.5rem;
         }
 
-        /* Steps */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
+        /* How It Works Section */
+        .how-it-works {
+            padding: 4rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .steps-container {
             max-width: 1000px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
         }
 
-        .step-item {
+        .step {
             text-align: center;
+            position: relative;
         }
 
         .step-number {
             width: 80px;
             height: 80px;
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -315,38 +345,34 @@
             font-size: 2rem;
             font-weight: 700;
             margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow-lg);
         }
 
-        .step-item h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--dark);
+        .step h3 {
+            font-size: 1.3rem;
             margin-bottom: 0.75rem;
+            color: var(--text-primary);
         }
 
-        .step-item p {
+        .step p {
             color: var(--text-secondary);
-            line-height: 1.6;
         }
 
         /* Footer */
         footer {
-            position: relative;
-            z-index: 2;
-            background: var(--dark);
+            background: var(--text-primary);
             color: white;
             padding: 4rem 2rem 2rem;
-            margin-top: 4rem;
         }
 
         .footer-content {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .footer-top {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
             margin-bottom: 3rem;
             padding-bottom: 3rem;
@@ -354,8 +380,12 @@
         }
 
         .footer-brand h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
+            background: linear-gradient(135deg, #FFFFFF, var(--primary-cyan));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
         }
 
@@ -365,9 +395,9 @@
         }
 
         .footer-links h4 {
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
-            font-weight: 600;
+            color: var(--primary-cyan);
         }
 
         .footer-links ul {
@@ -382,11 +412,10 @@
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             transition: color 0.3s ease;
-            font-size: 0.95rem;
         }
 
         .footer-links a:hover {
-            color: white;
+            color: var(--primary-cyan);
         }
 
         .footer-bottom {
@@ -396,67 +425,54 @@
         }
 
         .footer-bottom a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--primary-cyan);
             text-decoration: none;
         }
 
-        .footer-bottom a:hover {
-            color: white;
-        }
-
         /* Responsive */
-        @media (max-width: 1024px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-top {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
             nav {
-                padding: 1rem 1.5rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-logo {
+                font-size: 1.25rem;
             }
 
             .nav-links a:not(.nav-login-btn) {
                 display: none;
             }
 
-            .main-wrapper {
-                margin: 2rem auto;
-                padding: 0 1.25rem;
+            .hero {
+                padding: 3rem 1.5rem 2.5rem;
             }
 
-            .hero-card {
-                padding: 3rem 2rem;
-                border-radius: 20px;
+            .features {
+                padding: 3rem 1.5rem;
             }
 
-            .content-card {
-                padding: 3rem 2rem;
-                border-radius: 20px;
+            .how-it-works {
+                padding: 3rem 1.5rem;
             }
 
-            .tagline {
-                position: relative;
-                bottom: auto;
-                left: auto;
-                transform: none;
-                margin-top: 3rem;
-                justify-content: center;
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .footer-top {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.95rem;
             }
         }
 
@@ -490,85 +506,81 @@
         </div>
     </nav>
 
-    <!-- Main Content Wrapper -->
-    <div class="main-wrapper">
-        <!-- Hero Card -->
-        <div class="hero-card animate-in">
-            <div class="hero-content">
-                <h1>The Growth Platform for EBMS</h1>
-                <p>IntraMind helps you master EBMS with instant answers, comprehensive guides, and powerful customizations. Built to simplify, teach, and automate.</p>
-                <div class="hero-buttons">
-                    <a href="/chat" class="btn-primary">Get Started</a>
-                    <a href="#features" class="btn-secondary">Explore Features</a>
-                </div>
-            </div>
-            <div class="tagline">
-                <div class="tagline-icon">IM</div>
-                <span>Learn faster, work smarter</span>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-in">
+            <h1>Your AI Assistant for <span class="gradient-text">EBMS</span></h1>
+            <p>Built to simplify, teach, and automate. IntraMind helps you master EBMS with instant answers, comprehensive guides, and powerful customizations.</p>
+            <div class="hero-buttons">
+                <a href="/chat" class="btn-primary">Get Started</a>
+                <a href="#features" class="btn-secondary">Explore Features</a>
             </div>
         </div>
+    </section>
 
-        <!-- Features Card -->
-        <div class="content-card" id="features">
-            <div class="section-header">
-                <h2>Everything You Need to Master EBMS</h2>
-                <p>Three powerful ways IntraMind transforms your workflow</p>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>Everything You Need to Master EBMS</h2>
+            <p>Three powerful ways IntraMind transforms your EBMS experience</p>
+        </div>
+        <div class="features-grid">
+            <!-- Feature 1: Knowledge Base -->
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Learn EBMS Faster</h3>
+                <p>Access our comprehensive knowledge base filled with official EBMS guides, tutorials, and best practices. Learn at your own pace with clear, structured documentation.</p>
+                <a href="/knowledge-base" class="feature-link">
+                    Browse Knowledge Base →
+                </a>
             </div>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <span class="feature-icon">📚</span>
-                    <h3>Learn EBMS Faster</h3>
-                    <p>Access our comprehensive knowledge base filled with official EBMS guides, tutorials, and best practices.</p>
-                    <a href="/knowledge-base" class="feature-link">
-                        Browse Knowledge Base →
-                    </a>
-                </div>
 
-                <div class="feature-item">
-                    <span class="feature-icon">💬</span>
-                    <h3>Get Help Instantly</h3>
-                    <p>Chat with IntraMind AI to get immediate answers to your EBMS questions. No more digging through manuals.</p>
-                    <a href="/chat" class="feature-link">
-                        Start Chatting →
-                    </a>
-                </div>
+            <!-- Feature 2: Instant Help -->
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Get Help Instantly</h3>
+                <p>Chat with IntraMind AI to get immediate answers to your EBMS questions. No more digging through manuals or waiting for support.</p>
+                <a href="/chat" class="feature-link">
+                    Start Chatting →
+                </a>
+            </div>
 
-                <div class="feature-item">
-                    <span class="feature-icon">🔧</span>
-                    <h3>Discover Customizations <span class="badge">Coming Soon</span></h3>
-                    <p>Browse our library of scripts, integrations, and customizations to extend EBMS functionality.</p>
-                    <span class="feature-link disabled">
-                        Coming Soon →
-                    </span>
-                </div>
+            <!-- Feature 3: Customizations -->
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Discover EBMS Customizations <span class="badge">Coming Soon</span></h3>
+                <p>Browse our library of scripts, integrations, and customizations to extend EBMS functionality and automate your workflows.</p>
+                <span class="feature-link" style="opacity: 0.5; cursor: not-allowed;">
+                    Coming Soon →
+                </span>
             </div>
         </div>
+    </section>
 
-        <!-- How It Works Card -->
-        <div class="content-card" id="how-it-works">
-            <div class="section-header">
-                <h2>How It Works</h2>
-                <p>Get started in three simple steps</p>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Get started in three simple steps</p>
+        </div>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Log In</h3>
+                <p>Access your IntraMind account using your customer or employee portal</p>
             </div>
-            <div class="steps-grid">
-                <div class="step-item">
-                    <div class="step-number">1</div>
-                    <h3>Log In</h3>
-                    <p>Access your IntraMind account using your customer or employee portal</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">2</div>
-                    <h3>Ask Questions</h3>
-                    <p>Type your EBMS question or browse our knowledge base</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">3</div>
-                    <h3>Get Instant Answers</h3>
-                    <p>Receive step-by-step guidance and actionable solutions</p>
-                </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Ask Questions</h3>
+                <p>Type your EBMS question or browse our knowledge base</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Get Instant Answers</h3>
+                <p>Receive step-by-step guidance and actionable solutions</p>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
