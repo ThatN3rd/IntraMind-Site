@@ -138,7 +138,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #BAE6FD 100%);
+            background: var(--bg-white);
             padding: 5rem 2rem 4rem;
             text-align: center;
             position: relative;
@@ -152,8 +152,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(14,165,233,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.5;
+            background: radial-gradient(ellipse at top, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
+            opacity: 1;
         }
 
         .hero-content {
@@ -265,15 +265,25 @@
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--light-blue), var(--primary-cyan));
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.25rem;
             margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
         }
 
         .feature-card h3 {
@@ -512,7 +522,7 @@
             <h1>Your AI Assistant for <span class="gradient-text">EBMS</span></h1>
             <p>Built to simplify, teach, and automate. IntraMind helps you master EBMS with instant answers, comprehensive guides, and powerful customizations.</p>
             <div class="hero-buttons">
-                <a href="/chat" class="btn-primary">Get Started</a>
+                <a href="/signup.html" class="btn-primary">Get Started</a>
                 <a href="#features" class="btn-secondary">Explore Features</a>
             </div>
         </div>
@@ -527,7 +537,12 @@
         <div class="features-grid">
             <!-- Feature 1: Knowledge Base -->
             <div class="feature-card">
-                <div class="feature-icon">📚</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
                 <h3>Learn EBMS Faster</h3>
                 <p>Access our comprehensive knowledge base filled with official EBMS guides, tutorials, and best practices. Learn at your own pace with clear, structured documentation.</p>
                 <a href="/knowledge-base" class="feature-link">
@@ -537,7 +552,11 @@
 
             <!-- Feature 2: Instant Help -->
             <div class="feature-card">
-                <div class="feature-icon">💬</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
                 <h3>Get Help Instantly</h3>
                 <p>Chat with IntraMind AI to get immediate answers to your EBMS questions. No more digging through manuals or waiting for support.</p>
                 <a href="/chat" class="feature-link">
@@ -547,7 +566,14 @@
 
             <!-- Feature 3: Customizations -->
             <div class="feature-card">
-                <div class="feature-icon">🔧</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20v-6M6 20V10M18 20v-4"></path>
+                        <circle cx="12" cy="10" r="2"></circle>
+                        <circle cx="6" cy="6" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                </div>
                 <h3>Discover EBMS Customizations <span class="badge">Coming Soon</span></h3>
                 <p>Browse our library of scripts, integrations, and customizations to extend EBMS functionality and automate your workflows.</p>
                 <span class="feature-link" style="opacity: 0.5; cursor: not-allowed;">
