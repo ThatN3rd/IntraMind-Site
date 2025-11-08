@@ -81,6 +81,24 @@
             color: var(--primary-blue);
         }
 
+        .nav-login-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .nav-login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             color: white;
@@ -121,7 +139,7 @@
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #BAE6FD 100%);
-            padding: 6rem 2rem;
+            padding: 5rem 2rem 4rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -146,7 +164,7 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
             color: var(--text-primary);
@@ -161,7 +179,7 @@
         }
 
         .hero p {
-            font-size: 1.35rem;
+            font-size: clamp(1.05rem, 2.5vw, 1.35rem);
             color: var(--text-secondary);
             margin-bottom: 2.5rem;
             max-width: 700px;
@@ -178,18 +196,18 @@
 
         /* Features Section */
         .features {
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
             background: var(--bg-white);
         }
 
         .section-header {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 4rem;
+            margin: 0 auto 3rem;
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
@@ -201,18 +219,25 @@
         }
 
         .features-grid {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
         }
 
         .feature-card {
             background: var(--bg-white);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
+            border-radius: 12px;
+            padding: 2rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -291,7 +316,7 @@
 
         /* How It Works Section */
         .how-it-works {
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
             background: var(--bg-light);
         }
 
@@ -331,45 +356,6 @@
 
         .step p {
             color: var(--text-secondary);
-        }
-
-        /* Login Section */
-        .login-section {
-            padding: 6rem 2rem;
-            background: var(--bg-white);
-        }
-
-        .login-cards {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .login-card {
-            background: linear-gradient(135deg, #F0F9FF, #E0F2FE);
-            border: 2px solid var(--primary-blue);
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .login-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .login-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .login-card p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
         }
 
         /* Footer */
@@ -445,32 +431,48 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            nav {
+                padding: 0.75rem 1rem;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            .nav-logo {
+                font-size: 1.25rem;
             }
 
-            .section-header h2 {
-                font-size: 2rem;
+            .nav-links a:not(.nav-login-btn) {
+                display: none;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem 2.5rem;
+            }
+
+            .features {
+                padding: 3rem 1.5rem;
+            }
+
+            .how-it-works {
+                padding: 3rem 1.5rem;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
+                gap: 1.5rem;
             }
 
             .steps-container {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .login-cards {
+            .footer-top {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.95rem;
             }
         }
 
@@ -499,7 +501,7 @@
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
-                <a href="#login">Login</a>
+                <a href="/login" class="nav-login-btn">Login</a>
             </div>
         </div>
     </nav>
@@ -510,7 +512,7 @@
             <h1>Your AI Assistant for <span class="gradient-text">EBMS</span></h1>
             <p>Built to simplify, teach, and automate. IntraMind helps you master EBMS with instant answers, comprehensive guides, and powerful customizations.</p>
             <div class="hero-buttons">
-                <a href="#login" class="btn-primary">Get Started</a>
+                <a href="/chat" class="btn-primary">Get Started</a>
                 <a href="#features" class="btn-secondary">Explore Features</a>
             </div>
         </div>
@@ -576,26 +578,6 @@
                 <div class="step-number">3</div>
                 <h3>Get Instant Answers</h3>
                 <p>Receive step-by-step guidance and actionable solutions</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Login Section -->
-    <section id="login" class="login-section">
-        <div class="section-header">
-            <h2>Access Your Portal</h2>
-            <p>Choose your login type to get started</p>
-        </div>
-        <div class="login-cards">
-            <div class="login-card">
-                <h3>Customer Login</h3>
-                <p>Access IntraMind chat, knowledge base, and resources</p>
-                <a href="/customer-login" class="btn-primary">Customer Portal →</a>
-            </div>
-            <div class="login-card">
-                <h3>Employee Login</h3>
-                <p>Internal access to IntraMind and administrative tools</p>
-                <a href="/employee-login" class="btn-primary">Employee Portal →</a>
             </div>
         </div>
     </section>
