@@ -273,7 +273,7 @@
             <p>Once your account is created, we store:</p>
             <ul>
                 <li><strong>Email Address</strong> - Used as your login identifier</li>
-                <li><strong>Password</strong> - Stored securely using industry-standard hashing techniques</li>
+                <li><strong>Password</strong> - Stored securely using encrypted hashing</li>
             </ul>
 
             <h3>3. Chat Conversations</h3>
@@ -281,10 +281,11 @@
             <ul>
                 <li><strong>Chat Messages</strong> - Your questions and our responses are stored in our database to provide context and memory for ongoing conversations</li>
                 <li><strong>Conversation History</strong> - Allows the AI to understand the context of your questions and provide better assistance over time</li>
+                <li><strong>Feedback</strong> - Your ratings (thumbs up/down) and optional comments help us improve service quality</li>
             </ul>
 
             <h3>4. Third-Party Processing</h3>
-            <p>Your chat messages are processed by OpenAI's API to generate responses. OpenAI handles this data according to their own privacy policy. We recommend reviewing <a href="https://openai.com/privacy/" target="_blank" style="color: var(--primary-blue);">OpenAI's Privacy Policy</a> to understand how they process data.</p>
+            <p>Your chat messages are processed by OpenAI's API to generate responses. OpenAI handles this data according to their own privacy policy and does not use API data to train their models. We recommend reviewing <a href="https://openai.com/privacy/" target="_blank" style="color: var(--primary-blue);">OpenAI's Privacy Policy</a> to understand how they process data.</p>
         </div>
 
         <!-- How We Use Your Information -->
@@ -296,6 +297,7 @@
                 <li><strong>Service Delivery</strong> - To provide you with AI assistance and EBMS support</li>
                 <li><strong>Conversation Memory</strong> - To maintain context across your chat sessions and improve the quality of responses</li>
                 <li><strong>Authentication</strong> - To verify your identity and secure your account</li>
+                <li><strong>Service Improvement</strong> - To analyze feedback and improve our AI assistance quality</li>
             </ul>
             <p><strong>We do not use your information for marketing, advertising, or any other purposes beyond providing the IntraMind service.</strong></p>
         </div>
@@ -304,20 +306,18 @@
         <div class="privacy-section">
             <h2>Data Storage and Security</h2>
 
-            <h3>Current Storage</h3>
-            <p>Your data is currently stored in a local SQLite database. We are in the process of migrating to PostgreSQL for improved security and reliability.</p>
-
-            <h3>Security Measures</h3>
+            <h3>Storage and Security</h3>
+            <p>Your data is stored in secure databases with restricted access. We implement industry-standard security measures to protect your information, including:</p>
             <ul>
-                <li>Passwords are hashed using industry-standard cryptographic techniques</li>
-                <li>Database access is restricted and secured</li>
-                <li>We implement reasonable security measures to protect against unauthorized access</li>
+                <li>Encrypted password storage</li>
+                <li>Secure database access controls</li>
+                <li>Regular security monitoring and updates</li>
             </ul>
 
             <h3>Data Retention</h3>
             <ul>
                 <li><strong>Signup Information</strong> - Destroyed after account creation is complete</li>
-                <li><strong>Account Credentials</strong> - Retained for as long as your account is active</li>
+                <li><strong>Account Data</strong> - Retained while your account is active</li>
                 <li><strong>Chat History</strong> - Retained to provide ongoing conversation context and improve your experience</li>
             </ul>
         </div>
@@ -344,7 +344,7 @@
                 <li><strong>Deletion</strong> - You can request that we delete your account and associated data</li>
                 <li><strong>Data Portability</strong> - You can request a copy of your data in a structured format</li>
             </ul>
-            <p>To exercise any of these rights, please contact us using the information provided below.</p>
+            <p>To exercise any of these rights, please contact us at <a href="mailto:marc@ebmscanada.com" style="color: var(--primary-blue);">marc@ebmscanada.com</a>. We will respond to your request within 30 days.</p>
         </div>
 
         <!-- Cookies and Tracking -->
@@ -357,7 +357,8 @@
         <!-- International Users -->
         <div class="privacy-section">
             <h2>International Users</h2>
-            <p>IntraMind primarily serves users in Canada and the United States. Your data is stored and processed in accordance with Canadian privacy laws.</p>
+            <p>IntraMind primarily serves users in Canada and the United States. Your data is stored and processed in accordance with Canadian privacy laws (PIPEDA).</p>
+            <p>Please note that AI processing is performed by OpenAI on servers located in the United States.</p>
         </div>
 
         <!-- Changes to This Policy -->
