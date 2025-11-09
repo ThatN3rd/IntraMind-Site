@@ -63,6 +63,114 @@
             font-size: 4rem;
             margin-bottom: 1.5rem;
         }
+
+        .notify-form {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .notify-form h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #0EA5E9;
+            color: white;
+        }
+
+        .btn-notify {
+            background: white;
+            color: #0EA5E9;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn-notify:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-notify:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .divider span {
+            background: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
+            padding: 0 1rem;
+            position: relative;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +178,51 @@
         <div class="icon">🚧</div>
         <h1>Coming Soon</h1>
         <p>This feature is currently under development. We're working hard to bring it to you soon!</p>
+
+        <div class="notify-form">
+            <h2>Get Notified When It's Ready</h2>
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms Access Key -->
+                <input type="hidden" name="access_key" value="66a8a52c-0744-4e3d-8bcc-2258571d4bb2">
+
+                <!-- Custom subject for notifications -->
+                <input type="hidden" name="subject" value="New Feature Notification Request - IntraMind">
+
+                <!-- Redirect after submission -->
+                <input type="hidden" name="redirect" value="https://thatn3rd.github.io/IntraMind-Site/thank-you.html">
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="you@example.com"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="feature">Which feature are you interested in? *</label>
+                    <select id="feature" name="interested_feature" required>
+                        <option value="">Select a feature...</option>
+                        <option value="AI Chat Assistant">AI Chat Assistant</option>
+                        <option value="Customizations Marketplace">Customizations Marketplace</option>
+                        <option value="Both Features">Both Features</option>
+                    </select>
+                </div>
+
+                <!-- Honeypot spam protection -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <button type="submit" class="btn-notify">Notify Me</button>
+            </form>
+        </div>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
         <a href="/" class="btn-home">Back to Home</a>
     </div>
 </body>
