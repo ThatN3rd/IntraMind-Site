@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Access - IntraMind</title>
+    <title>Thank You - IntraMind</title>
     <style>
         * {
             margin: 0;
@@ -93,73 +93,85 @@
             padding: 2rem;
         }
 
-        .signup-container {
+        .success-container {
             background: var(--bg-white);
             border-radius: 16px;
             box-shadow: var(--shadow-xl);
             padding: 3rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             border: 1px solid var(--border-color);
-        }
-
-        .signup-header {
             text-align: center;
-            margin-bottom: 2rem;
         }
 
-        .signup-header h1 {
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        h1 {
             font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             color: var(--text-primary);
         }
 
-        .signup-header .gradient-text {
+        .gradient-text {
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .signup-header p {
+        p {
             color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .form-group {
+            font-size: 1.1rem;
             margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
+        .info-box {
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
             border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            margin: 2rem 0;
+            text-align: left;
         }
 
-        input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        .info-box h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
         }
 
-        .btn-submit {
-            width: 100%;
+        .info-box p {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-primary {
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             color: white;
-            padding: 0.875rem 1.5rem;
+            padding: 0.875rem 2rem;
             border-radius: 8px;
             border: none;
             font-weight: 600;
@@ -167,53 +179,14 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-md);
-            margin-top: 0.5rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
         }
 
-        .btn-submit:hover {
+        .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        .info-box {
-            background: var(--light-blue);
-            border-left: 4px solid var(--primary-blue);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-
-        .info-box p {
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .login-link p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .login-link a {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .login-link a:hover {
-            color: var(--dark-blue);
         }
 
         /* Responsive */
@@ -226,11 +199,11 @@
                 font-size: 1.25rem;
             }
 
-            .signup-container {
+            .success-container {
                 padding: 2rem 1.5rem;
             }
 
-            .signup-header h1 {
+            h1 {
                 font-size: 1.75rem;
             }
         }
@@ -247,8 +220,26 @@
             }
         }
 
+        @keyframes checkmark {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .animate-in {
             animation: fadeInUp 0.6s ease-out;
+        }
+
+        .success-icon {
+            animation: checkmark 0.5s ease-out 0.2s both;
         }
     </style>
 </head>
@@ -265,70 +256,29 @@
 
     <!-- Main Content -->
     <main>
-        <div class="signup-container animate-in">
-            <div class="signup-header">
-                <h1>Request <span class="gradient-text">Access</span></h1>
-                <p>Submit your information to request an IntraMind account</p>
+        <div class="success-container animate-in">
+            <div class="success-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
             </div>
+
+            <h1><span class="gradient-text">Thank You!</span></h1>
+            <p>Your request has been submitted successfully.</p>
 
             <div class="info-box">
-                <p><strong>Note:</strong> Account requests are reviewed manually. You'll receive an email once your account has been created and is ready to use.</p>
+                <h3>What happens next?</h3>
+                <p><strong>1. We'll review your request</strong> - Our team will process your account request manually.</p>
+                <p><strong>2. Account creation</strong> - Once approved, we'll create your IntraMind account.</p>
+                <p><strong>3. Email notification</strong> - You'll receive an email with your login instructions and next steps.</p>
             </div>
 
-            <form id="signupForm" action="https://api.web3forms.com/submit" method="POST">
-                <!-- Web3Forms Access Key - Replace YOUR_ACCESS_KEY_HERE with your actual key -->
-                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+            <p style="font-size: 0.95rem; margin-top: 2rem;">
+                This usually takes <strong>1-2 business days</strong>. We'll be in touch soon!
+            </p>
 
-                <!-- Optional: Customize the email subject -->
-                <input type="hidden" name="subject" value="New IntraMind Account Request">
-
-                <!-- Optional: Redirect after successful submission -->
-                <input type="hidden" name="redirect" value="https://thatn3rd.github.io/IntraMind-Site/thank-you.html">
-
-                <div class="form-group">
-                    <label for="name">Full Name *</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        placeholder="John Doe"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        placeholder="john@company.com"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="company">Company Name *</label>
-                    <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        required
-                        placeholder="Acme Corporation"
-                    >
-                </div>
-
-                <!-- Honeypot spam protection (hidden from users) -->
-                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-                <button type="submit" class="btn-submit">Submit Request</button>
-            </form>
-
-            <div class="login-link">
-                <p>Already have an account? <a href="/account.html">Sign in here</a></p>
-            </div>
+            <a href="/index.html" class="btn-primary">Return to Home</a>
         </div>
     </main>
-
 </body>
 </html>
