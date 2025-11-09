@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Access - IntraMind</title>
+    <title>Contact Us - IntraMind</title>
     <style>
         * {
             margin: 0;
@@ -93,36 +93,36 @@
             padding: 2rem;
         }
 
-        .signup-container {
+        .contact-container {
             background: var(--bg-white);
             border-radius: 16px;
             box-shadow: var(--shadow-xl);
             padding: 3rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             border: 1px solid var(--border-color);
         }
 
-        .signup-header {
+        .contact-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .signup-header h1 {
+        .contact-header h1 {
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: var(--text-primary);
         }
 
-        .signup-header .gradient-text {
+        .contact-header .gradient-text {
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .signup-header p {
+        .contact-header p {
             color: var(--text-secondary);
             font-size: 1rem;
         }
@@ -139,7 +139,7 @@
             font-size: 0.95rem;
         }
 
-        input {
+        input, textarea, select {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 2px solid var(--border-color);
@@ -149,10 +149,15 @@
             font-family: inherit;
         }
 
-        input:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary-blue);
             box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
         }
 
         .btn-submit {
@@ -193,27 +198,33 @@
             margin: 0;
         }
 
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-color);
+            text-align: center;
         }
 
-        .login-link p {
+        .contact-info h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
             color: var(--text-secondary);
             font-size: 0.95rem;
+            margin-bottom: 0.5rem;
         }
 
-        .login-link a {
+        .contact-info a {
             color: var(--primary-blue);
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.3s ease;
         }
 
-        .login-link a:hover {
-            color: var(--dark-blue);
+        .contact-info a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive */
@@ -226,11 +237,11 @@
                 font-size: 1.25rem;
             }
 
-            .signup-container {
+            .contact-container {
                 padding: 2rem 1.5rem;
             }
 
-            .signup-header h1 {
+            .contact-header h1 {
                 font-size: 1.75rem;
             }
         }
@@ -258,6 +269,7 @@
         <div class="nav-container">
             <a href="/" class="nav-logo">IntraMind</a>
             <div class="nav-links">
+                <a href="/index.html">Home</a>
                 <a href="/account.html">Account</a>
             </div>
         </div>
@@ -265,34 +277,34 @@
 
     <!-- Main Content -->
     <main>
-        <div class="signup-container animate-in">
-            <div class="signup-header">
-                <h1>Request <span class="gradient-text">Access</span></h1>
-                <p>Submit your information to request an IntraMind account</p>
+        <div class="contact-container animate-in">
+            <div class="contact-header">
+                <h1>Contact <span class="gradient-text">Us</span></h1>
+                <p>Have a question? We'd love to hear from you.</p>
             </div>
 
             <div class="info-box">
-                <p><strong>Note:</strong> Account requests are reviewed manually. You'll receive an email once your account has been created and is ready to use.</p>
+                <p><strong>Response time:</strong> We typically respond within 1-2 business days.</p>
             </div>
 
-            <form id="signupForm" action="https://api.web3forms.com/submit" method="POST">
+            <form action="https://api.web3forms.com/submit" method="POST">
                 <!-- Web3Forms Access Key -->
                 <input type="hidden" name="access_key" value="66a8a52c-0744-4e3d-8bcc-2258571d4bb2">
 
                 <!-- Optional: Customize the email subject -->
-                <input type="hidden" name="subject" value="New IntraMind Account Request">
+                <input type="hidden" name="subject" value="New Contact Form Submission - IntraMind">
 
-                <!-- Optional: Redirect after successful submission -->
+                <!-- Optional: Custom redirect after submission -->
                 <input type="hidden" name="redirect" value="https://thatn3rd.github.io/IntraMind-Site/thank-you.html">
 
                 <div class="form-group">
-                    <label for="name">Full Name *</label>
+                    <label for="name">Name *</label>
                     <input
                         type="text"
                         id="name"
                         name="name"
                         required
-                        placeholder="John Doe"
+                        placeholder="Your name"
                     >
                 </div>
 
@@ -303,32 +315,44 @@
                         id="email"
                         name="email"
                         required
-                        placeholder="john@company.com"
+                        placeholder="you@example.com"
                     >
                 </div>
 
                 <div class="form-group">
-                    <label for="company">Company Name *</label>
-                    <input
-                        type="text"
-                        id="company"
-                        name="company"
+                    <label for="subject_line">Subject *</label>
+                    <select id="subject_line" name="inquiry_type" required>
+                        <option value="">Select a topic...</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Technical Support">Technical Support</option>
+                        <option value="Account Issue">Account Issue</option>
+                        <option value="Feature Request">Feature Request</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea
+                        id="message"
+                        name="message"
                         required
-                        placeholder="Acme Corporation"
-                    >
+                        placeholder="How can we help you?"
+                    ></textarea>
                 </div>
 
                 <!-- Honeypot spam protection (hidden from users) -->
                 <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
-                <button type="submit" class="btn-submit">Submit Request</button>
+                <button type="submit" class="btn-submit">Send Message</button>
             </form>
 
-            <div class="login-link">
-                <p>Already have an account? <a href="/account.html">Sign in here</a></p>
+            <div class="contact-info">
+                <h3>Other Ways to Reach Us</h3>
+                <p>Email: <a href="mailto:info@intramind.ca">info@intramind.ca</a></p>
+                <p>Support: <a href="mailto:support@intramind.ca">support@intramind.ca</a></p>
             </div>
         </div>
     </main>
-
 </body>
 </html>
