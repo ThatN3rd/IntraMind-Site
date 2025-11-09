@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - IntraMind</title>
+    <title>FAQ - IntraMind</title>
     <style>
         * {
             margin: 0;
@@ -113,7 +113,7 @@
                 var(--bg-white) 0%,
                 var(--light-blue) 50%,
                 var(--bg-white) 100%);
-            padding: clamp(3rem, 8vh, 6rem) 1.5rem clamp(3rem, 8vh, 6rem);
+            padding: clamp(3rem, 8vh, 5rem) 1.5rem clamp(2rem, 5vh, 3rem);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -141,7 +141,7 @@
         .hero h1 {
             font-size: clamp(2rem, 3vw + 1rem, 3.5rem);
             font-weight: 800;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             line-height: 1.2;
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
             background-clip: text;
@@ -150,115 +150,104 @@
         }
 
         .hero p {
-            font-size: clamp(1rem, 1vw + 0.5rem, 1.3rem);
+            font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
             color: var(--text-secondary);
-            margin-bottom: 2rem;
             line-height: 1.8;
         }
 
-        /* Mission Section */
-        .mission-section {
+        /* FAQ Section */
+        .faq-section {
             padding: clamp(3rem, 8vh, 5rem) 1.5rem;
             background: var(--bg-white);
         }
 
-        .mission-container {
-            max-width: 1200px;
+        .faq-container {
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        .mission-section h2 {
-            font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--text-primary);
-        }
-
-        .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .mission-card {
+        .faq-item {
             background: var(--bg-light);
-            padding: 2rem;
-            border-radius: 12px;
             border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
 
-        .mission-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+        .faq-item:hover {
+            box-shadow: var(--shadow-md);
         }
 
-        .mission-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            user-select: none;
         }
 
-        .mission-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        /* Story Section */
-        .story-section {
-            padding: clamp(3rem, 8vh, 5rem) 1.5rem;
-            background: var(--bg-light);
-        }
-
-        .story-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .story-section h2 {
-            font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+        .faq-question h3 {
+            font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+            font-weight: 600;
             color: var(--text-primary);
+            flex: 1;
         }
 
-        .story-section p {
-            font-size: clamp(1rem, 1vw + 0.5rem, 1.2rem);
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            font-weight: 300;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
             color: var(--text-secondary);
             line-height: 1.8;
-            margin-bottom: 1.5rem;
+            font-size: clamp(0.95rem, 0.8vw + 0.5rem, 1.1rem);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
         }
 
         /* CTA Section */
         .cta-section {
             padding: clamp(3rem, 8vh, 5rem) 1.5rem;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            background: var(--bg-light);
             text-align: center;
         }
 
         .cta-section h2 {
             font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
             font-weight: 700;
-            color: white;
+            color: var(--text-primary);
             margin-bottom: 1rem;
         }
 
         .cta-section p {
             font-size: clamp(1rem, 1vw + 0.5rem, 1.2rem);
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-secondary);
             margin-bottom: 2rem;
         }
 
-        .btn-white {
-            background: white;
-            color: var(--primary-blue);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            color: white;
             padding: 0.85rem 2rem;
             border-radius: 8px;
             border: none;
@@ -270,9 +259,9 @@
             display: inline-block;
         }
 
-        .btn-white:hover {
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Footer */
@@ -363,43 +352,127 @@
     <main>
         <section class="hero">
             <div class="hero-content">
-                <h1>Making EBMS Work Better for You</h1>
-                <p>We're dedicated to simplifying EBMS, empowering users with knowledge, and automating the complex tasks that slow you down.</p>
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about IntraMind and how we help you master EBMS.</p>
             </div>
         </section>
 
-        <section class="mission-section">
-            <div class="mission-container">
-                <h2>Our Mission</h2>
-                <div class="mission-grid">
-                    <div class="mission-card">
-                        <h3>Simplify</h3>
-                        <p>We believe EBMS shouldn't be complicated. Our tools and resources turn complex workflows into straightforward solutions.</p>
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is IntraMind?</h3>
+                        <span class="faq-toggle">+</span>
                     </div>
-                    <div class="mission-card">
-                        <h3>Teach</h3>
-                        <p>Knowledge is power. We provide comprehensive guides, tutorials, and instant AI-powered support to help you master EBMS.</p>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            IntraMind is an AI-powered assistant platform designed to help you master EBMS (Electronic Building Management System). We provide instant answers, comprehensive guides, and powerful customizations to make working with EBMS easier and more efficient.
+                        </div>
                     </div>
-                    <div class="mission-card">
-                        <h3>Automate</h3>
-                        <p>Save time with smart customizations and automated workflows. Focus on what matters while we handle the repetitive tasks.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is EBMS?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            EBMS (Electronic Building Management System) is a comprehensive software platform used for managing building operations, maintenance, and related workflows. It's a powerful tool that can be complex to master, which is where IntraMind comes in.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How does IntraMind help with EBMS?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            IntraMind simplifies EBMS in three key ways: <strong>Simplify</strong> - we make complex workflows easier to understand; <strong>Teach</strong> - we provide comprehensive guides and AI-powered support to answer your questions instantly; <strong>Automate</strong> - we offer customizations and scripts to save you time on repetitive tasks.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How do I get started?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Getting started is easy! Simply request access through our signup page. Once approved, you'll gain access to our knowledge base, AI chat support, and library of EBMS customizations. We're currently in early access, so spaces are limited.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is IntraMind free to use?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We're currently in early access and offering limited free access to help us build the best possible product. Pricing details for our full launch will be announced soon. Early access users will receive special benefits.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is my data secure?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, we take data security seriously. All data is encrypted in transit and at rest. We never share your information with third parties, and we comply with industry-standard security practices. For more details, please review our Privacy Policy.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What kind of support is available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            IntraMind offers multiple support channels: AI-powered chat for instant answers (coming soon), comprehensive documentation and guides in our knowledge base, and direct email support through our contact form. We're committed to helping you succeed with EBMS.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I suggest features or customizations?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! We actively encourage feedback and feature requests from our users. You can submit suggestions through our contact form or directly through the platform. We're building IntraMind for the EBMS community, so your input is invaluable.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Do I need to be an EBMS expert to use IntraMind?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Not at all! IntraMind is designed for users of all skill levels, from beginners just learning EBMS to experienced power users looking for advanced customizations. Our platform adapts to your needs and helps you learn as you go.
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="story-section">
-            <div class="story-container">
-                <h2>Why We Exist</h2>
-                <p>IntraMind was born from firsthand experience with the challenges of EBMS. We know the frustration of scattered documentation, complex configurations, and steep learning curves.</p>
-                <p>Our platform combines official knowledge resources, AI-powered assistance, and community-driven customizations to create a comprehensive solution that helps you work smarter, not harder.</p>
-            </div>
-        </section>
-
         <section class="cta-section">
-            <h2>Ready to Get Started?</h2>
-            <p>Join others who are mastering EBMS with IntraMind</p>
-            <a href="/signup.html" class="btn-white">Request Access</a>
+            <h2>Still Have Questions?</h2>
+            <p>We're here to help. Reach out to our team for personalized assistance.</p>
+            <a href="/contact.html" class="btn-primary">Contact Us</a>
         </section>
     </main>
 
@@ -441,5 +514,22 @@
             <p>&copy; 2024 IntraMind. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const wasActive = faqItem.classList.contains('active');
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!wasActive) {
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
