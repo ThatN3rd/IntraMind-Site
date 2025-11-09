@@ -225,5 +225,22 @@
 
         <a href="/" class="btn-home">Back to Home</a>
     </div>
+
+    <script>
+        // Pre-select feature based on URL parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const feature = urlParams.get('feature');
+            const featureSelect = document.getElementById('feature');
+
+            if (feature && featureSelect) {
+                if (feature === 'chat') {
+                    featureSelect.value = 'AI Chat Assistant';
+                } else if (feature === 'customizations') {
+                    featureSelect.value = 'Customizations Marketplace';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
