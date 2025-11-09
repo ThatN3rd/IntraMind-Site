@@ -90,6 +90,89 @@
             color: var(--primary-blue);
         }
 
+        .nav-login-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .nav-login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            z-index: 99;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
         /* Main Content */
         main {
             flex: 1;
@@ -238,6 +321,26 @@
                 font-size: 1.25rem;
             }
 
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .nav-links a:not(.nav-login-btn) {
+                display: none;
+            }
+
+            .nav-login-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 700;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
             main {
                 padding: 2rem 1rem;
             }
@@ -283,10 +386,24 @@
             <a href="/" class="nav-logo">IntraMind</a>
             <div class="nav-links">
                 <a href="/index.html">Home</a>
-                <a href="/account.html">Account</a>
+                <a href="/faq.html">FAQ</a>
+                <a href="/about.html">About</a>
+                <a href="/account.html" class="nav-login-btn">Account</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="/index.html">Home</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/about.html">About</a>
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -356,6 +473,32 @@
                 } else if (feature === 'customizations') {
                     featureSelect.value = 'Customizations Marketplace';
                 }
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
             }
         });
     </script>
