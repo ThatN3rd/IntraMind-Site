@@ -1,853 +1,906 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntraMind - Your AI Assistant for EBMS</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #0EA5E9;
-            --primary-cyan: #06B6D4;
-            --dark-blue: #0284C7;
-            --light-blue: #E0F2FE;
-            --bg-light: #FAFAFA;
-            --bg-white: #FFFFFF;
-            --text-primary: #1E293B;
-            --text-secondary: #64748B;
-            --border-color: #E2E8F0;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
-            background: var(--bg-light);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            font-size: clamp(14px, 0.8vw + 0.5rem, 18px);
-        }
-
-        /* Navigation */
-        nav {
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: clamp(1.25rem, 1vw + 0.8rem, 1.75rem);
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: clamp(0.9rem, 0.7vw + 0.5rem, 1.1rem);
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-blue);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .mobile-menu-toggle span {
-            width: 24px;
-            height: 2px;
-            background: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .mobile-menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: var(--shadow-lg);
-            z-index: 99;
-        }
-
-        .mobile-menu.active {
-            display: block;
-        }
-
-        .mobile-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu a:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        .mobile-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .nav-login-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
-            color: white;
-            padding: 0.6rem 1.25rem;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-
-        .nav-login-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
-            color: white;
-            padding: clamp(0.65rem, 0.8vh + 0.4rem, 1rem) clamp(1.25rem, 1.5vw + 0.8rem, 2rem);
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            font-size: clamp(0.95rem, 0.7vw + 0.5rem, 1.15rem);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: var(--bg-white);
-            color: var(--primary-blue);
-            padding: clamp(0.65rem, 0.8vh + 0.4rem, 1rem) clamp(1.25rem, 1.5vw + 0.8rem, 2rem);
-            border-radius: 8px;
-            border: 2px solid var(--primary-blue);
-            font-weight: 600;
-            font-size: clamp(0.95rem, 0.7vw + 0.5rem, 1.15rem);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-secondary:hover {
-            background: var(--light-blue);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: var(--bg-white);
-            padding: clamp(3rem, 8vh, 8rem) 1.5rem clamp(2.5rem, 6vh, 6rem);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at top, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
-            opacity: 1;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 3vw + 1rem, 4.5rem);
-            font-weight: 800;
-            margin-bottom: clamp(1rem, 2vh, 2rem);
-            color: var(--text-primary);
-            line-height: 1.15;
-        }
-
-        .hero .gradient-text {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: clamp(1.05rem, 0.8vw + 0.7rem, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: clamp(2rem, 3vh, 3.5rem);
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 4rem 1.5rem;
-            background: var(--bg-white);
-            position: relative;
-        }
-
-        .features::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .section-header h2 {
-            font-size: clamp(1.75rem, 2vw + 0.8rem, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .section-header p {
-            font-size: clamp(1.05rem, 0.8vw + 0.6rem, 1.35rem);
-            color: var(--text-secondary);
-        }
-
-        .features-grid {
-            max-width: 85%;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.75rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (min-width: 1920px) {
-            .features-grid {
-                max-width: 1600px;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-                max-width: 600px;
-            }
-        }
-
-        .feature-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-cyan));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -5px rgba(14, 165, 233, 0.15), 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--bg-light);
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            margin: 0 auto 1.5rem;
-            color: var(--primary-blue);
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-            transform: scale(1.05);
-        }
-
-        .feature-card h3 {
-            font-size: clamp(1.25rem, 1vw + 0.7rem, 1.65rem);
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .feature-card .badge {
-            display: inline-block;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            font-size: clamp(0.95rem, 0.6vw + 0.5rem, 1.1rem);
-        }
-
-        .feature-link {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s ease;
-        }
-
-        .feature-link:hover {
-            gap: 0.75rem;
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #FEF3C7, #FCD34D);
-            color: #92400E;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* How It Works Section */
-        .how-it-works {
-            padding: 4rem 1.5rem;
-            background: var(--bg-light);
-            position: relative;
-        }
-
-        .how-it-works::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.02) 0%, transparent 50%, rgba(6, 182, 212, 0.02) 100%);
-            pointer-events: none;
-        }
-
-        .steps-container {
-            max-width: 85%;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (min-width: 1920px) {
-            .steps-container {
-                max-width: 1400px;
-            }
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0 auto 1.5rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .step h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .step p {
-            color: var(--text-secondary);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-            color: white;
-            padding: 4rem 1.5rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
-            opacity: 0.5;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-            padding-bottom: 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-brand h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #FFFFFF, var(--primary-cyan));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-        }
-
-        .footer-links h4 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: var(--primary-cyan);
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-cyan);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-        }
-
-        .footer-bottom a {
-            color: var(--primary-cyan);
-            text-decoration: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 0.75rem 1.5rem;
-            }
-
-            .nav-container {
-                max-width: 100%;
-            }
-
-            .nav-logo {
-                font-size: 1.25rem;
-            }
-
-            .nav-links {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-            }
-
-            .nav-links a {
-                display: none;
-            }
-
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            .hero {
-                padding: 3rem 1.5rem 2.5rem;
-            }
-
-            .features {
-                padding: 3rem 1.5rem;
-            }
-
-            .how-it-works {
-                padding: 3rem 1.5rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .steps-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            footer {
-                padding: 2rem 1.5rem 1.5rem;
-            }
-
-            .footer-top {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                margin-bottom: 1.5rem;
-                padding-bottom: 1.5rem;
-            }
-
-            .btn-primary, .btn-secondary {
-                padding: 0.65rem 1.25rem;
-                font-size: 0.95rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-in {
-            animation: fadeInUp 0.6s ease-out;
-        }
-    </style>
-    <script
-        src="https://app.rybbit.io/api/script.js"
-        data-site-id="0c559cfff936"
-        defer
-    ></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IntraMind -- EBMS Live: AI-Powered Business Intelligence for EBMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cyan:        #38bdf8;
+    --cyan-dark:   #0ea5e9;
+    --cyan-hover:  #7dd3fc;
+    --cyan-glow:   rgba(56,189,248,0.18);
+    --cyan-tint:   rgba(56,189,248,0.07);
+    --cyan-border: rgba(56,189,248,0.22);
+    --bg:          #f8fafc;
+    --bg2:         #ffffff;
+    --bg3:         #f1f5f9;
+    --text:        #0f172a;
+    --text2:       #334155;
+    --muted:       #64748b;
+    --border:      #e2e8f0;
+    --grad:        linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    --green:       #059669;
+    --green-dim:   rgba(5,150,105,0.08);
+    --green-border:rgba(5,150,105,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(248,250,252,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 62px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-weight: 800; font-size: 1.1rem;
+    text-decoration: none; color: var(--text);
+  }
+  .nav-logo .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow);
+  }
+  .nav-logo .intra { color: var(--cyan); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--grad); color: #fff !important;
+    padding: 0.45rem 1.1rem; border-radius: 8px;
+    font-weight: 600 !important; font-size: 0.875rem !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.9; }
+
+  @media (max-width: 640px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,168,232,0.07) 0%, transparent 65%);
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 .highlight {
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted);
+    max-width: 560px; margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--grad); color: #fff;
+    padding: 0.75rem 1.75rem; border-radius: 10px;
+    font-weight: 700; font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(56,189,248,0.3);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--bg2); color: var(--text);
+    padding: 0.75rem 1.75rem; border-radius: 10px;
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; border: 1px solid var(--border);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--cyan-border); transform: translateY(-1px); }
+
+
+  /* ── Mockup ── */
+  .mockup-section {
+    padding: 2rem 2rem 5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .browser-chrome {
+    background: #eef1f7;
+    border-radius: 12px 12px 0 0;
+    padding: 0.6rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-bottom: none;
+  }
+  .chrome-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .chrome-dot.r { background: #ef4444; }
+  .chrome-dot.y { background: #f59e0b; }
+  .chrome-dot.g { background: #22c55e; }
+  .chrome-bar {
+    flex: 1; background: #fff; border-radius: 4px;
+    padding: 0.25rem 0.7rem; margin: 0 0.4rem;
+    font-size: 0.7rem; color: #94a3b8; font-family: monospace;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .chrome-status {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.65rem; color: #94a3b8;
+  }
+  .chrome-pip { width: 6px; height: 6px; border-radius: 50%; background: #059669; box-shadow: 0 0 5px rgba(5,150,105,0.5); }
+
+  .dashboard-mockup {
+    background: #f4f6fb;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  }
+
+  /* Real header bar */
+  .mock-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 1rem;
+    background: rgba(255,255,255,0.95);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+  .mock-header-left { display: flex; align-items: center; gap: 0.5rem; }
+  .mock-logo-icon {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: rgba(2,132,199,0.08); border: 1px solid rgba(2,132,199,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: #0284c7;
+  }
+  .mock-brand { font-size: 0.8rem; font-weight: 700; color: #0f172a; }
+  .mock-brand span { color: #0284c7; }
+  .mock-company-tag {
+    font-size: 0.65rem; color: #64748b;
+    background: #eef1f7; border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 5px; padding: 0.15rem 0.5rem; margin-left: 0.3rem;
+  }
+  .mock-header-right { display: flex; align-items: center; gap: 0.75rem; }
+  .mock-header-sub { font-size: 0.62rem; color: #94a3b8; }
+  .mock-status { display: flex; align-items: center; gap: 4px; font-size: 0.62rem; color: #64748b; }
+  .mock-status-dot { width: 5px; height: 5px; border-radius: 50%; background: #059669; box-shadow: 0 0 4px rgba(5,150,105,0.5); }
+  .mock-refresh {
+    font-size: 0.62rem; color: #64748b;
+    background: none; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 5px; padding: 0.15rem 0.5rem;
+  }
+
+  /* Tab bar */
+  .mock-tabs {
+    display: flex; gap: 2px; padding: 0 1rem;
+    background: #ffffff; border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+  .mock-tab {
+    display: flex; align-items: center; gap: 5px;
+    padding: 0.5rem 0.85rem; font-size: 0.7rem; font-weight: 500;
+    color: #94a3b8; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .mock-tab.active { color: #0284c7; border-bottom-color: #0284c7; }
+
+  /* Dashboard content */
+  .mock-content { padding: 1rem; background: #f4f6fb; }
+
+  /* KPI grid - 4 cols x 2 rows */
+  .mock-kpi-grid {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 0.6rem; margin-bottom: 0.6rem;
+  }
+  @media (max-width: 700px) { .mock-kpi-grid { grid-template-columns: repeat(2,1fr); } }
+
+  .mock-kpi {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-left: 2px solid var(--kc);
+    border-radius: 8px; padding: 0.65rem 0.75rem;
+    position: relative; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .mock-kpi-icon {
+    position: absolute; top: 7px; right: 8px;
+    color: var(--kc); opacity: 0.18;
+  }
+  .mock-kpi-label { font-size: 0.6rem; color: #64748b; font-weight: 500; letter-spacing: 0.02em; margin-bottom: 0.35rem; }
+  .mock-kpi-value { font-size: 1.1rem; font-weight: 700; color: #0f172a; line-height: 1; letter-spacing: -0.02em; }
+  .mock-kpi-sub { font-size: 0.58rem; color: #64748b; margin-top: 0.25rem; display: flex; align-items: center; gap: 3px; }
+  .mock-change { font-size: 0.55rem; font-weight: 700; padding: 1px 4px; border-radius: 3px; }
+  .mock-change.up { background: rgba(5,150,105,0.1); color: #059669; }
+  .mock-change.down { background: rgba(220,38,38,0.1); color: #dc2626; }
+
+  /* Charts 2x2 */
+  .mock-charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  @media (max-width: 700px) { .mock-charts-grid { grid-template-columns: 1fr; } }
+
+  .mock-chart-card {
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 8px; padding: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .mock-chart-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 0.6rem;
+  }
+  .mock-chart-title { font-size: 0.65rem; font-weight: 600; color: #334155; }
+  .mock-chart-link { font-size: 0.58rem; color: #0284c7; }
+
+  /* Bar charts */
+  .mock-bars { display: flex; align-items: flex-end; gap: 5px; height: 65px; }
+  .mock-bar { flex: 1; border-radius: 3px 3px 0 0; }
+
+  /* Horizontal bar (customers chart) */
+  .mock-hbars { display: flex; flex-direction: column; gap: 5px; justify-content: center; height: 65px; }
+  .mock-hbar-row { display: flex; align-items: center; gap: 5px; }
+  .mock-hbar-label { font-size: 0.55rem; color: #64748b; width: 65px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+  .mock-hbar-track { flex: 1; height: 8px; background: rgba(0,0,0,0.05); border-radius: 3px; overflow: hidden; }
+  .mock-hbar-fill { height: 100%; border-radius: 3px; background: rgba(124,58,237,0.5); }
+
+  /* ── How it works ── */
+  .section { max-width: 1000px; margin: 0 auto; padding: 5rem 2rem; }
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--cyan-dark); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;
+  }
+  .section-sub { font-size: 1rem; color: var(--muted); max-width: 500px; line-height: 1.7; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  @media (max-width: 640px) { .steps { grid-template-columns: 1fr; } }
+
+  .step-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.75rem;
+    position: relative;
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--cyan-tint); border: 1px solid var(--cyan-border);
+    color: var(--cyan-dark); font-weight: 800; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── Chat mockup section ── */
+  .chat-section {
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2rem;
+  }
+  .chat-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  @media (max-width: 720px) { .chat-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+  .chat-mockup-wrap {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 1.25rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  }
+  .chat-window { display: flex; flex-direction: column; gap: 0.75rem; }
+  .chat-header {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding-bottom: 0.75rem; border-bottom: 1px solid #1e293b;
+    margin-bottom: 0.25rem;
+  }
+  .chat-header-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .chat-header-label { font-size: 0.75rem; font-weight: 700; color: #f8fafc; }
+  .chat-header-sub { font-size: 0.65rem; color: #64748b; margin-left: auto; }
+
+  .bubble { padding: 0.6rem 0.85rem; border-radius: 10px; font-size: 0.8rem; line-height: 1.5; max-width: 90%; }
+  .bubble.user { background: #1e293b; color: #94a3b8; align-self: flex-end; margin-left: auto; border-radius: 10px 10px 2px 10px; }
+  .bubble.ai { background: rgba(0,168,232,0.1); border: 1px solid rgba(0,168,232,0.2); color: #cbd5e1; border-radius: 10px 10px 10px 2px; }
+  .bubble.ai strong { color: #00a8e8; }
+  .chat-input-row {
+    margin-top: 0.5rem;
+    background: #1e293b; border: 1px solid #334155;
+    border-radius: 8px; padding: 0.5rem 0.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.75rem; color: #475569;
+  }
+  .chat-send-btn {
+    background: var(--grad); border: none; border-radius: 6px;
+    width: 26px; height: 26px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Features grid ── */
+  .features-section { background: var(--bg2); padding: 5rem 2rem; border-top: 1px solid var(--border); }
+  .features-inner { max-width: 1000px; margin: 0 auto; }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  @media (max-width: 720px) { .features-grid { grid-template-columns: 1fr; } }
+
+  .feat-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem;
+  }
+  .feat-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--cyan-tint); border: 1px solid var(--cyan-border);
+    color: var(--cyan-dark);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .feat-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .feat-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── Pricing teaser ── */
+  .pricing-teaser {
+    max-width: 1000px; margin: 0 auto; padding: 5rem 2rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 640px) { .pricing-teaser { grid-template-columns: 1fr; } }
+
+  .price-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+  }
+  .price-card.featured {
+    border-color: var(--cyan-border);
+    box-shadow: 0 0 0 1px var(--cyan-border), 0 16px 48px rgba(0,168,232,0.08);
+  }
+  .price-card-head {
+    padding: 1.5rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .price-card.featured .price-card-head {
+    background: var(--cyan-tint); border-bottom-color: var(--cyan-border);
+  }
+  .price-badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    background: var(--grad); color: #fff;
+    padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.6rem;
+  }
+  .price-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.6rem; }
+  .price-amount { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+  .price-card.featured .price-amount { color: var(--cyan-dark); }
+  .price-suffix { font-size: 0.85rem; color: var(--muted); }
+  .price-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+  .price-note strong { color: var(--cyan-dark); }
+  .price-card-body { padding: 1.25rem 1.75rem 1.5rem; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .price-features li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; color: var(--text2); }
+  .chk {
+    width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+    background: var(--green-dim); border: 1px solid var(--green-border); color: var(--green);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chk svg { width: 8px; height: 8px; }
+  .pricing-cta-row { text-align: center; margin-top: 2rem; }
+  .pricing-cta-row a { color: var(--cyan-dark); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+  .pricing-cta-row a:hover { text-decoration: underline; }
+
+  /* ── CTA band ── */
+  .cta-band {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    padding: 5rem 2rem; text-align: center;
+  }
+  .cta-band h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: #f8fafc; margin-bottom: 1rem; }
+  .cta-band p { color: #94a3b8; font-size: 1rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  /* ── Footer ── */
+  footer {
+    background: #0f172a; border-top: 1px solid #1e293b;
+    padding: 3rem 2rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem;
+  }
+  @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } }
+  .footer-brand .logo { font-weight: 800; font-size: 1.05rem; color: #f8fafc; margin-bottom: 0.5rem; }
+  .footer-brand .logo span { color: #38bdf8; }
+  .footer-brand p { font-size: 0.825rem; color: #64748b; line-height: 1.6; max-width: 260px; }
+  .footer-col h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #475569; margin-bottom: 0.75rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col ul a { font-size: 0.825rem; color: #64748b; text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: #94a3b8; }
+  .footer-bottom {
+    max-width: 1000px; margin: 2rem auto 0;
+    padding-top: 1.5rem; border-top: 1px solid #1e293b;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.775rem; color: #475569;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="/" class="nav-logo">IntraMind</a>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="/faq.html">FAQ</a>
-                <a href="/about.html">About</a>
-                <a href="/account.html" class="nav-login-btn">Account</a>
-                <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="/faq.html">FAQ</a>
-        <a href="/about.html">About</a>
-        <a href="/account.html">Account</a>
+<!-- Nav -->
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="dot"></span>
+    <span class="intra">Intra</span>Mind
+  </a>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#features">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Ask your EBMS data<br><span class="highlight">anything. In plain English.</span></h1>
+  <p class="hero-sub">EBMS Live runs on your server, connects directly to your live EBMS database, and lets anyone on your team get instant business answers -- no SQL, no reports, no waiting.</p>
+  <div class="hero-actions">
+    <a href="contact.html" class="btn-primary">Book a Demo</a>
+    <a href="#how-it-works" class="btn-secondary">See How it Works</a>
+  </div>
+</section>
+
+<!-- Dashboard Mockup -->
+<div class="mockup-section">
+  <div class="browser-chrome">
+    <span class="chrome-dot r"></span>
+    <span class="chrome-dot y"></span>
+    <span class="chrome-dot g"></span>
+    <span class="chrome-bar">acmeco.intramind.ca</span>
+    <span class="chrome-status"><span class="chrome-pip"></span>Live</span>
+  </div>
+  <div class="dashboard-mockup">
+
+    <!-- Real header -->
+    <div class="mock-header">
+      <div class="mock-header-left">
+        <div class="mock-logo-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <span class="mock-brand"><span>Intra</span>Mind</span>
+        <span class="mock-company-tag">Acme Building Supplies</span>
+      </div>
+      <div class="mock-header-right">
+        <span class="mock-header-sub">Live EBMS data &middot; Read-only</span>
+        <span class="mock-refresh">Refresh</span>
+        <span class="mock-status"><span class="mock-status-dot"></span>Live</span>
+      </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content animate-in">
-            <h1>Your AI Assistant for <span class="gradient-text">EBMS</span></h1>
-            <p>Built to simplify, teach, and automate. IntraMind helps you master EBMS with instant answers, comprehensive guides, and powerful customizations.</p>
-            <div class="hero-buttons">
-                <a href="/account.html" class="btn-primary">Request Access</a>
-                <a href="#features" class="btn-secondary">Explore Features</a>
-            </div>
+    <!-- Tab bar -->
+    <div class="mock-tabs">
+      <div class="mock-tab active">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="mock-tab">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Assistant
+      </div>
+    </div>
+
+    <!-- Dashboard content -->
+    <div class="mock-content">
+
+      <!-- KPI Row 1: AR, Sales, Overdue, AP -->
+      <div class="mock-kpi-grid">
+        <div class="mock-kpi" style="--kc:#38bdf8">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="mock-kpi-label">AR Outstanding</div>
+          <div class="mock-kpi-value">$138,420</div>
+          <div class="mock-kpi-sub">47 open invoices</div>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="section-header">
-            <h2>Everything You Need to Master EBMS</h2>
-            <p>Three powerful ways IntraMind transforms your EBMS experience</p>
+        <div class="mock-kpi" style="--kc:#34d399">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+          <div class="mock-kpi-label">Sales This Month</div>
+          <div class="mock-kpi-value">$284,150</div>
+          <div class="mock-kpi-sub">63 invoices <span class="mock-change up">+12.4%</span></div>
         </div>
-        <div class="features-grid">
-            <!-- Feature 1: Knowledge Base -->
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                    </svg>
-                </div>
-                <h3>Learn EBMS Faster</h3>
-                <p>Access the official EBMS knowledge base with guides, tutorials, and best practices. Learn at your own pace with clear, structured documentation.</p>
-                <a href="https://koblesystems.com/knowledge" class="feature-link">
-                    View EBMS Documentation →
-                </a>
-            </div>
-
-            <!-- Feature 2: Instant Help -->
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </div>
-                <h3>Get Help Instantly</h3>
-                <span class="badge">Coming Soon</span>
-                <p>Chat with IntraMind AI to get immediate answers to your EBMS questions. No more digging through manuals or waiting for support.</p>
-                <a href="/coming-soon.html?feature=chat" class="feature-link">
-                    Get Notified →
-                </a>
-            </div>
-
-            <!-- Feature 3: Customizations -->
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 20v-6M6 20V10M18 20v-4"></path>
-                        <circle cx="12" cy="10" r="2"></circle>
-                        <circle cx="6" cy="6" r="2"></circle>
-                        <circle cx="18" cy="12" r="2"></circle>
-                    </svg>
-                </div>
-                <h3>Discover EBMS Customizations</h3>
-                <span class="badge">Coming Soon</span>
-                <p>Browse the library of scripts, integrations, and customizations to extend EBMS functionality and automate your workflows.</p>
-                <a href="/coming-soon.html?feature=customizations" class="feature-link">
-                    Get Notified →
-                </a>
-            </div>
+        <div class="mock-kpi" style="--kc:#f87171">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="mock-kpi-label">Overdue AR</div>
+          <div class="mock-kpi-value">$21,880</div>
+          <div class="mock-kpi-sub">8 invoices overdue</div>
         </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="section-header">
-            <h2>How It Works</h2>
-            <p>Get started in three simple steps</p>
+        <div class="mock-kpi" style="--kc:#c084fc">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+          <div class="mock-kpi-label">AP Outstanding</div>
+          <div class="mock-kpi-value">$56,200</div>
+          <div class="mock-kpi-sub">14 vendor bills</div>
         </div>
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Request Access</h3>
-                <p>Submit a quick request form with your details and we'll create your IntraMind account</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Ask Your Questions</h3>
-                <p>Chat with IntraMind AI or explore the EBMS documentation at your own pace</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Get Instant Answers</h3>
-                <p>Receive step-by-step guidance and actionable solutions</p>
-            </div>
+      </div>
+
+      <!-- KPI Row 2: Bills, Payroll, Payments, Avg Days -->
+      <div class="mock-kpi-grid">
+        <div class="mock-kpi" style="--kc:#fbbf24">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="mock-kpi-label">Bills Due This Week</div>
+          <div class="mock-kpi-value">$18,750</div>
+          <div class="mock-kpi-sub">5 bills due</div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <h3>IntraMind</h3>
-                    <p>Dedicated to making EBMS work better for you.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="https://koblesystems.com/knowledge">Knowledge Base</a></li>
-                        <li><a href="/coming-soon.html?feature=chat">AI Chat (Notify Me)</a></li>
-                        <li><a href="/coming-soon.html?feature=customizations">Customizations (Notify Me)</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="/contact.html">Contact Support</a></li>
-                        <li><a href="/faq.html">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 IntraMind. All rights reserved.</p>
-            </div>
+        <div class="mock-kpi" style="--kc:#2dd4bf">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="mock-kpi-label">Payroll This Month</div>
+          <div class="mock-kpi-value">$42,600</div>
+          <div class="mock-kpi-sub">12 paychecks</div>
         </div>
-    </footer>
+        <div class="mock-kpi" style="--kc:#818cf8">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/><path d="M12 3v12"/><path d="M3 20h18"/></svg></div>
+          <div class="mock-kpi-label">Payments Received</div>
+          <div class="mock-kpi-value">$196,300</div>
+          <div class="mock-kpi-sub">38 payments</div>
+        </div>
+        <div class="mock-kpi" style="--kc:#fb7185">
+          <div class="mock-kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="mock-kpi-label">Avg Days to Pay</div>
+          <div class="mock-kpi-value">28 days</div>
+          <div class="mock-kpi-sub">from 94 paid invoices</div>
+        </div>
+      </div>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const mobileMenu = document.querySelector('.mobile-menu');
+      <!-- Charts 2x2 -->
+      <div class="mock-charts-grid">
+        <!-- AR Aging -->
+        <div class="mock-chart-card">
+          <div class="mock-chart-head">
+            <span class="mock-chart-title">AR Aging</span>
+            <span class="mock-chart-link">View invoices &rarr;</span>
+          </div>
+          <div class="mock-bars">
+            <div class="mock-bar" style="height:100%;background:#34d399;opacity:0.7;border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:55%;background:#fbbf24;opacity:0.7;border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:30%;background:#f87171;opacity:0.7;border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:18%;background:#dc2626;opacity:0.7;border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:5px">
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">0-30d</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">31-60d</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">61-90d</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">90+d</span>
+          </div>
+        </div>
 
-        mobileMenuToggle.addEventListener('click', () => {
-            mobileMenuToggle.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
+        <!-- Sales by Month -->
+        <div class="mock-chart-card">
+          <div class="mock-chart-head">
+            <span class="mock-chart-title">Sales -- Last 6 Months</span>
+            <span class="mock-chart-link">Details &rarr;</span>
+          </div>
+          <div class="mock-bars">
+            <div class="mock-bar" style="height:58%;background:rgba(56,189,248,0.5);border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:72%;background:rgba(56,189,248,0.55);border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:51%;background:rgba(56,189,248,0.5);border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:80%;background:rgba(56,189,248,0.6);border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:88%;background:rgba(56,189,248,0.65);border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:100%;background:rgba(56,189,248,0.8);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:5px">
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">Dec</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">Jan</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">Feb</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">Mar</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">Apr</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">May</span>
+          </div>
+        </div>
 
-        // Close mobile menu when clicking a link
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-            });
-        });
+        <!-- Top Customers -->
+        <div class="mock-chart-card">
+          <div class="mock-chart-head">
+            <span class="mock-chart-title">Top Customers YTD</span>
+            <span class="mock-chart-link">Details &rarr;</span>
+          </div>
+          <div class="mock-hbars">
+            <div class="mock-hbar-row"><span class="mock-hbar-label">Riverside Const.</span><div class="mock-hbar-track"><div class="mock-hbar-fill" style="width:100%"></div></div></div>
+            <div class="mock-hbar-row"><span class="mock-hbar-label">Northern Supply</span><div class="mock-hbar-track"><div class="mock-hbar-fill" style="width:74%"></div></div></div>
+            <div class="mock-hbar-row"><span class="mock-hbar-label">Prairie Builders</span><div class="mock-hbar-track"><div class="mock-hbar-fill" style="width:58%"></div></div></div>
+            <div class="mock-hbar-row"><span class="mock-hbar-label">Apex Contracting</span><div class="mock-hbar-track"><div class="mock-hbar-fill" style="width:41%"></div></div></div>
+          </div>
+        </div>
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                mobileMenuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-            }
-        });
-    </script>
+        <!-- AP Aging -->
+        <div class="mock-chart-card">
+          <div class="mock-chart-head">
+            <span class="mock-chart-title">AP Aging</span>
+            <span class="mock-chart-link">View bills &rarr;</span>
+          </div>
+          <div class="mock-bars">
+            <div class="mock-bar" style="height:100%;background:#34d399;opacity:0.65;border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:40%;background:#fbbf24;opacity:0.65;border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:20%;background:#f87171;opacity:0.65;border-radius:3px 3px 0 0"></div>
+            <div class="mock-bar" style="height:8%;background:#dc2626;opacity:0.65;border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:5px">
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">0-30d</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">31-60d</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">61-90d</span>
+            <span style="font-size:0.55rem;color:#94a3b8;flex:1;text-align:center">90+d</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /mock-content -->
+  </div><!-- /dashboard-mockup -->
+</div>
+
+<!-- How it works -->
+<section class="section" id="how-it-works">
+  <div class="section-eyebrow">How it works</div>
+  <div class="section-title">Up and running in an afternoon</div>
+  <p class="section-sub">We handle the setup. You get answers to questions you've never been able to ask before.</p>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>We set it up on your server</h3>
+      <p>EBMS Live installs directly on your Windows server alongside EBMS. It connects read-only to your Postgres database -- no changes to EBMS, no data leaves your building.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Instant access from any browser</h3>
+      <p>Your team accesses the dashboard from any browser, anywhere -- no VPN required. A secure Cloudflare tunnel handles the connection.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Ask questions in plain English</h3>
+      <p>Type any business question and get a direct answer from your live EBMS data. Sales, AR, inventory, purchasing -- anything in your database.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Chat mockup section -->
+<div class="chat-section">
+  <div class="chat-inner">
+    <div>
+      <div class="section-eyebrow">Natural language queries</div>
+      <div class="section-title" style="max-width:400px">Your data answers back</div>
+      <p class="section-sub" style="margin-bottom:1.5rem">No SQL. No Crystal Reports. No waiting on your IT person. Just ask the question and get the answer -- straight from your live EBMS database.</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem">
+        <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.875rem;color:var(--text2)">
+          <span style="color:var(--green);font-size:1rem">+</span> "What's my top selling product this month?"
+        </li>
+        <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.875rem;color:var(--text2)">
+          <span style="color:var(--green);font-size:1rem">+</span> "Which customers haven't ordered in 60 days?"
+        </li>
+        <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.875rem;color:var(--text2)">
+          <span style="color:var(--green);font-size:1rem">+</span> "How much do we owe vendors right now?"
+        </li>
+        <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.875rem;color:var(--text2)">
+          <span style="color:var(--green);font-size:1rem">+</span> "Show me gross margin by product line YTD"
+        </li>
+      </ul>
+    </div>
+    <div class="chat-mockup-wrap">
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:0.65rem;border-bottom:1px solid rgba(0,0,0,0.07);margin-bottom:0.75rem">
+        <div style="display:flex;align-items:center;gap:0.4rem">
+          <div style="width:22px;height:22px;border-radius:6px;background:rgba(2,132,199,0.08);border:1px solid rgba(2,132,199,0.2);display:flex;align-items:center;justify-content:center;color:#0284c7">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <span style="font-size:0.72rem;font-weight:700;color:#0f172a"><span style="color:#0284c7">Intra</span>Mind</span>
+          <span style="font-size:0.62rem;color:#64748b;background:#eef1f7;border:1px solid rgba(0,0,0,0.07);border-radius:4px;padding:1px 6px">Acme Building Supplies</span>
+        </div>
+        <span style="font-size:0.6rem;color:#94a3b8">Live &middot; Read-only</span>
+      </div>
+      <!-- Suggestion chips -->
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:0.85rem">
+        <span style="background:#eef1f7;border:1px solid rgba(0,0,0,0.07);border-radius:99px;padding:3px 10px;font-size:0.62rem;color:#64748b">Top customers this year</span>
+        <span style="background:#eef1f7;border:1px solid rgba(0,0,0,0.07);border-radius:99px;padding:3px 10px;font-size:0.62rem;color:#64748b">Bills due this week</span>
+        <span style="background:#eef1f7;border:1px solid rgba(0,0,0,0.07);border-radius:99px;padding:3px 10px;font-size:0.62rem;color:#64748b">Sales vs last month</span>
+      </div>
+      <!-- Messages -->
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.75rem">
+        <div style="display:flex;justify-content:flex-end">
+          <div style="background:#e0f2fe;border:1px solid rgba(2,132,199,0.15);border-radius:14px 14px 3px 14px;padding:0.5rem 0.75rem;font-size:0.75rem;color:#0f172a;max-width:82%">
+            What's my gross margin this month vs last month?
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.3rem">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="width:18px;height:18px;border-radius:5px;background:rgba(2,132,199,0.08);border:1px solid rgba(2,132,199,0.2);display:flex;align-items:center;justify-content:center;color:#0284c7;flex-shrink:0">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <span style="font-size:0.62rem;font-weight:600;color:#64748b">IntraMind</span>
+          </div>
+          <div style="font-size:0.75rem;color:#334155;line-height:1.6">
+            This month your gross margin is <strong style="color:#0f172a">38.2%</strong>, up from <strong style="color:#0f172a">34.7%</strong> last month. The improvement is driven mainly by lower material costs on lumber orders.
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end">
+          <div style="background:#e0f2fe;border:1px solid rgba(2,132,199,0.15);border-radius:14px 14px 3px 14px;padding:0.5rem 0.75rem;font-size:0.75rem;color:#0f172a;max-width:82%">
+            Which product line is dragging it down?
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.3rem">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="width:18px;height:18px;border-radius:5px;background:rgba(2,132,199,0.08);border:1px solid rgba(2,132,199,0.2);display:flex;align-items:center;justify-content:center;color:#0284c7;flex-shrink:0">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <span style="font-size:0.62rem;font-weight:600;color:#64748b">IntraMind</span>
+          </div>
+          <div style="font-size:0.75rem;color:#334155;line-height:1.6">
+            <strong style="color:#0f172a">Hardware &amp; Fasteners</strong> is your lowest margin line at <strong style="color:#0f172a">21.4%</strong>, primarily due to 3 large orders at discounted pricing in the last 2 weeks.
+          </div>
+          <div style="display:inline-flex;align-items:center;gap:4px;margin-top:2px;font-size:0.6rem;color:#64748b;background:#eef1f7;border:1px solid rgba(0,0,0,0.07);border-radius:5px;padding:3px 8px;width:fit-content">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            View SQL &middot; 3 rows
+          </div>
+        </div>
+      </div>
+      <!-- Input bar -->
+      <div style="background:#ffffff;border:1px solid rgba(0,0,0,0.1);border-radius:10px;padding:0.45rem 0.5rem 0.45rem 0.75rem;display:flex;align-items:center;gap:0.5rem">
+        <span style="flex:1;font-size:0.72rem;color:#94a3b8">Ask anything about your EBMS data...</span>
+        <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#0284c7,#0369a1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="features-section" id="features">
+  <div class="features-inner">
+    <div class="section-eyebrow">Features</div>
+    <div class="section-title">Built for EBMS businesses</div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Live KPI Dashboard</h3>
+        <p>Revenue, AR aging, open invoices, top customers -- always up to date, direct from your EBMS database. No exports, no stale spreadsheets.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Natural Language Queries</h3>
+        <p>Ask any business question in plain English. The AI translates it to SQL, runs it against your live data, and gives you a plain-English answer.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Revenue Charts</h3>
+        <p>Visual sales trends, month-over-month comparisons, and top-line charts that update in real time as orders come through EBMS.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Secure by Design</h3>
+        <p>Read-only database access. Runs on your server. No EBMS data is ever sent to a third party. Bearer token auth and rate limiting included.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        </div>
+        <h3>Access from Anywhere</h3>
+        <p>Browser-based, mobile-friendly. No VPN, no remote desktop. Your sales rep can check AR from their phone on the road.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Automatic Updates</h3>
+        <p>New features and improvements roll out automatically. Your server pulls updates from our stable branch every 6 hours -- no manual installs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing teaser -->
+<section>
+  <div class="pricing-teaser">
+    <div style="grid-column:1/-1;margin-bottom:1rem">
+      <div class="section-eyebrow">Pricing</div>
+      <div class="section-title">Start free. Upgrade when you're ready.</div>
+    </div>
+    <div class="price-card">
+      <div class="price-card-head">
+        <div class="price-name">Free</div>
+        <div><span class="price-amount">$0</span> <span class="price-suffix">/mo</span></div>
+        <div class="price-note">Forever free. No credit card required.</div>
+      </div>
+      <div class="price-card-body">
+        <ul class="price-features">
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>KPI dashboard -- 8 core metrics</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Natural language chat</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Browser access, no VPN</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Automatic updates</li>
+        </ul>
+      </div>
+    </div>
+    <div class="price-card featured">
+      <div class="price-card-head">
+        <div class="price-badge">Premium</div>
+        <div class="price-name">Premium</div>
+        <div><span class="price-amount">$200</span> <span class="price-suffix">/mo</span></div>
+        <div class="price-note">Up to 5 users. <strong>+$25/mo per additional user.</strong></div>
+      </div>
+      <div class="price-card-body">
+        <ul class="price-features">
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Everything in Free</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Named user accounts + role-based access</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Configurable KPI library</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Advanced metrics: margin, quotes, top customers</li>
+          <li><span class="chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>Priority support</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-cta-row" style="grid-column:1/-1">
+      <a href="pricing.html">See full pricing details and examples &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA band -->
+<div class="cta-band">
+  <h2>Ready to see your EBMS data come alive?</h2>
+  <p>Book a 20-minute demo and we'll show you what EBMS Live can answer about your own data.</p>
+  <a href="contact.html" class="btn-primary">Book a Demo</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo"><span>Intra</span>Mind</div>
+      <p>AI-powered business intelligence for EBMS ERP. Built by people who know EBMS.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 IntraMind / Lumetra Solutions. All rights reserved.</span>
+    <span>intramind.ca</span>
+  </div>
+</footer>
+
 </body>
 </html>
