@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Updates - IntraMind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cyan:        #38bdf8;
+    --cyan-dark:   #0ea5e9;
+    --cyan-hover:  #7dd3fc;
+    --cyan-glow:   rgba(56,189,248,0.18);
+    --cyan-tint:   rgba(56,189,248,0.07);
+    --cyan-border: rgba(56,189,248,0.22);
+    --bg:          #f8fafc;
+    --bg2:         #ffffff;
+    --bg3:         #f1f5f9;
+    --text:        #0f172a;
+    --text2:       #334155;
+    --muted:       #64748b;
+    --border:      #e2e8f0;
+    --grad:        linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    --green:       #059669;
+    --green-dim:   rgba(5,150,105,0.08);
+    --green-border:rgba(5,150,105,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(248,250,252,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 62px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-weight: 800; font-size: 1.1rem;
+    text-decoration: none; color: var(--text);
+  }
+  .nav-logo .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow);
+  }
+  .nav-logo .intra { color: var(--cyan); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--grad); color: #fff !important;
+    padding: 0.45rem 1.1rem; border-radius: 8px;
+    font-weight: 600 !important; font-size: 0.875rem !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.9; }
+
+  @media (max-width: 640px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+
+  /* Page header */
+  .page-header {
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,168,232,0.07) 0%, transparent 65%);
+  }
+  .page-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+  .page-header p {
+    font-size: 1rem; color: var(--muted);
+    max-width: 480px; margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Updates list */
+  .updates-section {
+    max-width: 720px; margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+
+  .update-entry {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  /* Vertical timeline line */
+  .update-entry::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.55rem; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .update-entry:last-child::before {
+    display: none;
+  }
+
+  /* Dot on the line */
+  .update-entry::after {
+    content: '';
+    position: absolute;
+    left: -3px; top: 0.55rem;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--cyan-border);
+  }
+
+  .update-version {
+    display: inline-block;
+    font-size: 0.8rem; font-weight: 700;
+    font-family: 'Inter', monospace;
+    color: var(--cyan-dark);
+    background: var(--cyan-tint);
+    border: 1px solid var(--cyan-border);
+    border-radius: 6px;
+    padding: 0.2rem 0.55rem;
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.01em;
+  }
+
+  .update-entry ul {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+
+  .update-entry ul li {
+    font-size: 0.875rem;
+    color: var(--text2);
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .update-entry ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.6rem;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+
+  /* Footer */
+  footer {
+    background: #0f172a; border-top: 1px solid #1e293b;
+    padding: 3rem 2rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem;
+  }
+  @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } }
+  .footer-brand .logo { font-weight: 800; font-size: 1.05rem; color: #f8fafc; margin-bottom: 0.5rem; }
+  .footer-brand .logo span { color: #38bdf8; }
+  .footer-brand p { font-size: 0.825rem; color: #64748b; line-height: 1.6; max-width: 260px; }
+  .footer-col h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #475569; margin-bottom: 0.75rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col ul a { font-size: 0.825rem; color: #64748b; text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: #94a3b8; }
+  .footer-bottom {
+    max-width: 1000px; margin: 2rem auto 0;
+    padding-top: 1.5rem; border-top: 1px solid #1e293b;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.775rem; color: #475569;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+</style>
+<script src="https://app.rybbit.io/api/script.js" data-site-id="0c559cfff936" defer></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="dot"></span><span><span class="intra">Intra</span>Mind</span>
+  </a>
+  <div class="nav-links">
+    <a href="/#how-it-works">How it works</a>
+    <a href="/#features">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>IntraMind Updates</h1>
+  <p>Release notes for all IntraMind versions. Updates are delivered automatically to all active installs.</p>
+</div>
+
+<section class="updates-section">
+
+  <div class="update-entry">
+    <div class="update-version">v1.3.4</div>
+    <ul>
+      <li>Fixed What's New notifications not appearing on beta channel installs</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.3.3</div>
+    <ul>
+      <li>Fixed folder queries returning 0 results -- items in named folders now correctly matched</li>
+      <li>Fixed What's New notification only showing for the first user to log in after an update</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.3.2</div>
+    <ul>
+      <li>Fixed query errors on installs where multi-currency columns are not present</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.3.1</div>
+    <ul>
+      <li>Fixed incorrect month resolution on follow-up queries</li>
+      <li>Fixed Days to Payment tile drill-down failing</li>
+      <li>Natural language folder queries now work (e.g. "items in my Parts folder")</li>
+      <li>Multi-currency awareness -- CAD and USD amounts no longer mixed in totals</li>
+      <li>Improved follow-up question context across the session</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.3.0</div>
+    <ul>
+      <li>Automatic updates no longer require a GitHub token -- updates are now fully self-managing</li>
+      <li>SHA256 checksum verification on every update for integrity</li>
+      <li>What's New notifications now delivered with every update automatically</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.2.5</div>
+    <ul>
+      <li>Cloudflare tunnel now automatically starts if stopped after an update</li>
+      <li>Automatic recovery if the tunnel service fails on boot</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.2.4</div>
+    <ul>
+      <li>Log noise suppression -- health and stats polling no longer clutters the agent log</li>
+      <li>Portal token system -- usage stats and log viewer secured per customer</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.2.3</div>
+    <ul>
+      <li>Remote log viewer -- admin portal can now pull server logs without RDP access</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.2.2</div>
+    <ul>
+      <li>Usage tracking -- queries today, this week, and active users visible in the admin portal</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.2.0</div>
+    <ul>
+      <li>Multi-company support -- switch between EBMS datasets at login</li>
+      <li>Company name in header reflects the active dataset</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.1.0</div>
+    <ul>
+      <li>Login now uses your EBMS username and password directly</li>
+      <li>Per-user permissions enforced based on your EBMS module access</li>
+      <li>Weak password warning shown after login if password doesn't meet security requirements</li>
+    </ul>
+  </div>
+
+  <div class="update-entry">
+    <div class="update-version">v1.0.0</div>
+    <ul>
+      <li>Initial release</li>
+      <li>Natural language queries against your EBMS database</li>
+      <li>AR, AP, inventory, payroll, and job costing modules supported</li>
+    </ul>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo"><span>Intra</span>Mind</div>
+      <p>AI-powered business intelligence for EBMS ERP. Built by people who know EBMS.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 IntraMind / Lumetra Solutions. All rights reserved.</span>
+    <span>intramind.ca</span>
+  </div>
+</footer>
+
+</body>
+</html>
