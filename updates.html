@@ -146,6 +146,17 @@
     text-transform: uppercase;
   }
 
+  .badge-beta {
+    font-size: 0.7rem; font-weight: 600;
+    color: #d97706;
+    background: rgba(217,119,6,0.08);
+    border: 1px solid rgba(217,119,6,0.3);
+    border-radius: 5px;
+    padding: 0.15rem 0.45rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
   .update-entry ul {
     list-style: none;
     display: flex; flex-direction: column; gap: 0.4rem;
@@ -357,14 +368,16 @@
             ${betaHtml}
           </div>`;
       } else {
-        // Beta-only group (no stable release yet for this cycle)
-        return `
+        // Upcoming beta cycle (no stable release yet): full entries, same
+        // layout as stable, tagged Beta
+        return group.betas.map(b => `
           <div class="update-entry">
             <div class="update-header">
-              <span class="update-version">Beta releases</span>
+              <span class="update-version">v${b.version}</span>
+              <span class="badge-beta">Beta</span>
             </div>
-            ${betaHtml}
-          </div>`;
+            <ul>${b.changes.map(c => `<li>${c}</li>`).join('')}</ul>
+          </div>`).join('');
       }
     }).join('');
   }
