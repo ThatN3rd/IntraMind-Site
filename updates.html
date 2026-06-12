@@ -255,7 +255,7 @@
 </nav>
 
 <div class="page-header">
-  <h1>IntraMind Updates</h1>
+  <h1><span style="color:var(--cyan)">Intra</span>Mind Updates</h1>
   <p>Release notes for all IntraMind versions. Updates are delivered automatically to all active installs.</p>
 </div>
 
@@ -298,22 +298,34 @@
     return patch === 0 || patch === 5;
   }
 
+  function semverDesc(a, b) {
+    const pa = a.version.split('.').map(Number), pb = b.version.split('.').map(Number);
+    for (let i = 0; i < 3; i++) {
+      if ((pa[i] || 0) !== (pb[i] || 0)) return (pb[i] || 0) - (pa[i] || 0);
+    }
+    return 0;
+  }
+
   function renderEntries(entries) {
-    // Group: each stable version collects the beta versions that precede it
+    entries = [...entries].sort(semverDesc);
+    // Entries are newest-first. Betas newer than the latest stable are the
+    // upcoming cycle; betas older than a stable were its test releases.
     const groups = [];
-    let betaBuffer = [];
+    const upcoming = [];
+    let current = null;
 
     for (const entry of entries) {
       if (isStable(entry.version)) {
-        groups.push({ stable: entry, betas: betaBuffer });
-        betaBuffer = [];
+        current = { stable: entry, betas: [] };
+        groups.push(current);
+      } else if (current) {
+        current.betas.push(entry);
       } else {
-        betaBuffer.push(entry);
+        upcoming.push(entry);
       }
     }
-    // Any trailing betas with no stable yet (current beta cycle)
-    if (betaBuffer.length) {
-      groups.push({ stable: null, betas: betaBuffer });
+    if (upcoming.length) {
+      groups.unshift({ stable: null, betas: upcoming });
     }
 
     return groups.map((group, gi) => {
@@ -362,11 +374,27 @@
     btn.nextElementSibling.classList.toggle('open');
   }
 
-  fetch('https://raw.githubusercontent.com/ThatN3rd/intramind-releases/main/changelog.json')
-    .then(r => r.json())
-    .then(entries => {
-      const list = document.getElementById('updates-list');
-      list.innerHTML = renderEntries(entries);
+  // Stable changelog is the curated source of truth; beta changelog fills in
+  // the in-between versions. On duplicate versions the stable entry wins.
+  const FEEDS = [
+    'https://raw.githubusercontent.com/ThatN3rd/intramind-releases/main/changelog.json',
+    'https://raw.githubusercontent.com/ThatN3rd/intramind-releases-beta/main/changelog.json',
+  ];
+
+  Promise.allSettled(FEEDS.map(u => fetch(u).then(r => r.json())))
+    .then(results => {
+      const byVersion = new Map();
+      // Beta feed first so stable entries overwrite duplicates
+      const [stableRes, betaRes] = results;
+      if (betaRes.status === 'fulfilled') {
+        for (const e of betaRes.value) byVersion.set(e.version, e);
+      }
+      if (stableRes.status === 'fulfilled') {
+        for (const e of stableRes.value) byVersion.set(e.version, e);
+      }
+      if (!byVersion.size) throw new Error('no data');
+      document.getElementById('updates-list').innerHTML =
+        renderEntries([...byVersion.values()]);
     })
     .catch(() => {
       document.getElementById('updates-list').innerHTML =
