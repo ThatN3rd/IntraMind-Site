@@ -169,6 +169,8 @@
     background: var(--muted);
   }
 
+  .updates-loading { color: var(--muted); font-size: 0.9rem; padding: 2rem 0; }
+
   /* Footer */
   footer {
     background: #0f172a; border-top: 1px solid #1e293b;
@@ -216,106 +218,8 @@
   <p>Release notes for all IntraMind versions. Updates are delivered automatically to all active installs.</p>
 </div>
 
-<section class="updates-section">
-
-  <div class="update-entry">
-    <div class="update-version">v1.3.4</div>
-    <ul>
-      <li>Fixed What's New notifications not appearing on beta channel installs</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.3.3</div>
-    <ul>
-      <li>Fixed folder queries returning 0 results -- items in named folders now correctly matched</li>
-      <li>Fixed What's New notification only showing for the first user to log in after an update</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.3.2</div>
-    <ul>
-      <li>Fixed query errors on installs where multi-currency columns are not present</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.3.1</div>
-    <ul>
-      <li>Fixed incorrect month resolution on follow-up queries</li>
-      <li>Fixed Days to Payment tile drill-down failing</li>
-      <li>Natural language folder queries now work (e.g. "items in my Parts folder")</li>
-      <li>Multi-currency awareness -- CAD and USD amounts no longer mixed in totals</li>
-      <li>Improved follow-up question context across the session</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.3.0</div>
-    <ul>
-      <li>Automatic updates no longer require a GitHub token -- updates are now fully self-managing</li>
-      <li>SHA256 checksum verification on every update for integrity</li>
-      <li>What's New notifications now delivered with every update automatically</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.2.5</div>
-    <ul>
-      <li>Cloudflare tunnel now automatically starts if stopped after an update</li>
-      <li>Automatic recovery if the tunnel service fails on boot</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.2.4</div>
-    <ul>
-      <li>Log noise suppression -- health and stats polling no longer clutters the agent log</li>
-      <li>Portal token system -- usage stats and log viewer secured per customer</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.2.3</div>
-    <ul>
-      <li>Remote log viewer -- admin portal can now pull server logs without RDP access</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.2.2</div>
-    <ul>
-      <li>Usage tracking -- queries today, this week, and active users visible in the admin portal</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.2.0</div>
-    <ul>
-      <li>Multi-company support -- switch between EBMS datasets at login</li>
-      <li>Company name in header reflects the active dataset</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.1.0</div>
-    <ul>
-      <li>Login now uses your EBMS username and password directly</li>
-      <li>Per-user permissions enforced based on your EBMS module access</li>
-      <li>Weak password warning shown after login if password doesn't meet security requirements</li>
-    </ul>
-  </div>
-
-  <div class="update-entry">
-    <div class="update-version">v1.0.0</div>
-    <ul>
-      <li>Initial release</li>
-      <li>Natural language queries against your EBMS database</li>
-      <li>AR, AP, inventory, payroll, and job costing modules supported</li>
-    </ul>
-  </div>
-
+<section class="updates-section" id="updates-list">
+  <p class="updates-loading">Loading updates...</p>
 </section>
 
 <footer>
@@ -346,6 +250,24 @@
     <span>intramind.ca</span>
   </div>
 </footer>
+
+<script>
+  fetch('https://raw.githubusercontent.com/ThatN3rd/intramind-releases/main/changelog.json')
+    .then(r => r.json())
+    .then(entries => {
+      const list = document.getElementById('updates-list');
+      list.innerHTML = entries.map((entry, i) => `
+        <div class="update-entry">
+          <div class="update-version">v${entry.version}</div>
+          <ul>${entry.changes.map(c => `<li>${c}</li>`).join('')}</ul>
+        </div>
+      `).join('');
+    })
+    .catch(() => {
+      document.getElementById('updates-list').innerHTML =
+        '<p class="updates-loading">Could not load updates. Please try again later.</p>';
+    });
+</script>
 
 </body>
 </html>
