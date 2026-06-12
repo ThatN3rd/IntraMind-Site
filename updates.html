@@ -25,9 +25,6 @@
     --muted:       #64748b;
     --border:      #e2e8f0;
     --grad:        linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-    --green:       #059669;
-    --green-dim:   rgba(5,150,105,0.08);
-    --green-border:rgba(5,150,105,0.3);
   }
 
   html { scroll-behavior: smooth; }
@@ -41,7 +38,6 @@
     overflow-x: hidden;
   }
 
-  /* Nav */
   nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(248,250,252,0.92);
@@ -76,13 +72,11 @@
     transition: opacity 0.2s !important;
   }
   .nav-cta:hover { opacity: 0.9; }
-
   @media (max-width: 640px) {
     .nav-links { gap: 1rem; }
     .nav-links a:not(.nav-cta) { display: none; }
   }
 
-  /* Page header */
   .page-header {
     padding: 4rem 2rem 3rem;
     text-align: center;
@@ -99,19 +93,17 @@
     line-height: 1.7;
   }
 
-  /* Updates list */
   .updates-section {
     max-width: 720px; margin: 0 auto;
     padding: 2rem 2rem 6rem;
   }
 
+  /* Stable release entry */
   .update-entry {
     position: relative;
     padding-left: 1.5rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 2rem;
   }
-
-  /* Vertical timeline line */
   .update-entry::before {
     content: '';
     position: absolute;
@@ -119,11 +111,7 @@
     width: 1px;
     background: var(--border);
   }
-  .update-entry:last-child::before {
-    display: none;
-  }
-
-  /* Dot on the line */
+  .update-entry:last-child::before { display: none; }
   .update-entry::after {
     content: '';
     position: absolute;
@@ -134,24 +122,34 @@
     box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--cyan-border);
   }
 
+  .update-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.65rem; flex-wrap: wrap; }
+
   .update-version {
     display: inline-block;
     font-size: 0.8rem; font-weight: 700;
-    font-family: 'Inter', monospace;
     color: var(--cyan-dark);
     background: var(--cyan-tint);
     border: 1px solid var(--cyan-border);
     border-radius: 6px;
     padding: 0.2rem 0.55rem;
-    margin-bottom: 0.65rem;
     letter-spacing: 0.01em;
+  }
+
+  .badge-stable {
+    font-size: 0.7rem; font-weight: 600;
+    color: #059669;
+    background: rgba(5,150,105,0.08);
+    border: 1px solid rgba(5,150,105,0.3);
+    border-radius: 5px;
+    padding: 0.15rem 0.45rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 
   .update-entry ul {
     list-style: none;
     display: flex; flex-direction: column; gap: 0.4rem;
   }
-
   .update-entry ul li {
     font-size: 0.875rem;
     color: var(--text2);
@@ -159,7 +157,6 @@
     padding-left: 1rem;
     position: relative;
   }
-
   .update-entry ul li::before {
     content: '';
     position: absolute;
@@ -169,9 +166,53 @@
     background: var(--muted);
   }
 
+  /* Beta releases toggle */
+  .beta-toggle {
+    margin-top: 1rem;
+    padding-left: 0;
+  }
+  .beta-toggle-btn {
+    background: none; border: none; cursor: pointer;
+    font-size: 0.775rem; color: var(--muted);
+    font-family: inherit; font-weight: 500;
+    display: flex; align-items: center; gap: 0.3rem;
+    padding: 0; transition: color 0.2s;
+  }
+  .beta-toggle-btn:hover { color: var(--cyan-dark); }
+  .beta-toggle-btn svg { transition: transform 0.2s; }
+  .beta-toggle-btn.open svg { transform: rotate(90deg); }
+
+  .beta-entries { display: none; margin-top: 0.75rem; padding-left: 1rem; border-left: 1px dashed var(--border); }
+  .beta-entries.open { display: block; }
+
+  .beta-entry { margin-bottom: 1rem; }
+  .beta-entry:last-child { margin-bottom: 0; }
+
+  .beta-version {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--muted);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.15rem 0.45rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+  }
+  .beta-entry ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+  .beta-entry ul li {
+    font-size: 0.825rem; color: var(--muted);
+    padding-left: 0.9rem; position: relative; line-height: 1.5;
+  }
+  .beta-entry ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 0.55rem;
+    width: 3px; height: 3px;
+    border-radius: 50%; background: var(--border);
+  }
+
   .updates-loading { color: var(--muted); font-size: 0.9rem; padding: 2rem 0; }
 
-  /* Footer */
   footer {
     background: #0f172a; border-top: 1px solid #1e293b;
     padding: 3rem 2rem 2rem;
@@ -252,16 +293,80 @@
 </footer>
 
 <script>
+  function isStable(version) {
+    const patch = parseInt(version.split('.')[2] || '0', 10);
+    return patch === 0 || patch === 5;
+  }
+
+  function renderEntries(entries) {
+    // Group: each stable version collects the beta versions that precede it
+    const groups = [];
+    let betaBuffer = [];
+
+    for (const entry of entries) {
+      if (isStable(entry.version)) {
+        groups.push({ stable: entry, betas: betaBuffer });
+        betaBuffer = [];
+      } else {
+        betaBuffer.push(entry);
+      }
+    }
+    // Any trailing betas with no stable yet (current beta cycle)
+    if (betaBuffer.length) {
+      groups.push({ stable: null, betas: betaBuffer });
+    }
+
+    return groups.map((group, gi) => {
+      const betaHtml = group.betas.length ? `
+        <div class="beta-toggle">
+          <button class="beta-toggle-btn" onclick="toggleBeta(this)">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            ${group.betas.length} beta release${group.betas.length > 1 ? 's' : ''}
+          </button>
+          <div class="beta-entries">
+            ${group.betas.map(b => `
+              <div class="beta-entry">
+                <div class="beta-version">v${b.version}</div>
+                <ul>${b.changes.map(c => `<li>${c}</li>`).join('')}</ul>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      if (group.stable) {
+        return `
+          <div class="update-entry">
+            <div class="update-header">
+              <span class="update-version">v${group.stable.version}</span>
+              <span class="badge-stable">Stable</span>
+            </div>
+            <ul>${group.stable.changes.map(c => `<li>${c}</li>`).join('')}</ul>
+            ${betaHtml}
+          </div>`;
+      } else {
+        // Beta-only group (no stable release yet for this cycle)
+        return `
+          <div class="update-entry">
+            <div class="update-header">
+              <span class="update-version">Beta releases</span>
+            </div>
+            ${betaHtml}
+          </div>`;
+      }
+    }).join('');
+  }
+
+  function toggleBeta(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  }
+
   fetch('https://raw.githubusercontent.com/ThatN3rd/intramind-releases/main/changelog.json')
     .then(r => r.json())
     .then(entries => {
       const list = document.getElementById('updates-list');
-      list.innerHTML = entries.map((entry, i) => `
-        <div class="update-entry">
-          <div class="update-version">v${entry.version}</div>
-          <ul>${entry.changes.map(c => `<li>${c}</li>`).join('')}</ul>
-        </div>
-      `).join('');
+      list.innerHTML = renderEntries(entries);
     })
     .catch(() => {
       document.getElementById('updates-list').innerHTML =
