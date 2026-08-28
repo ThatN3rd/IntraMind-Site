@@ -437,9 +437,9 @@
                         <label for="feature">Which feature are you interested in? *</label>
                         <select id="feature" name="interested_feature" required>
                             <option value="">Select a feature...</option>
-                            <option value="AI Chat Assistant">AI Chat Assistant</option>
-                            <option value="Customizations Marketplace">Customizations Marketplace</option>
-                            <option value="Both Features">Both Features</option>
+                            <option value="Custom KPIs / Integrations">Custom KPIs / Integrations</option>
+                            <option value="Role-Based Access">Role-Based Access</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
 
@@ -460,10 +460,10 @@
             const featureSelect = document.getElementById('feature');
 
             if (feature && featureSelect) {
-                if (feature === 'chat') {
-                    featureSelect.value = 'AI Chat Assistant';
-                } else if (feature === 'customizations') {
-                    featureSelect.value = 'Customizations Marketplace';
+                if (feature === 'customizations') {
+                    featureSelect.value = 'Custom KPIs / Integrations';
+                } else if (feature === 'roles') {
+                    featureSelect.value = 'Role-Based Access';
                 }
             }
         });
