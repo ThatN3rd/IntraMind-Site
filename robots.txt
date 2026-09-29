@@ -1,9 +1,5 @@
-User-agent: *
-# Oh, a bot. How original.
-# There's nothing here for you.
-# Seriously. Close the tab. Go touch grass.
-Disallow: /
+# intramind.ca
+# Oh, a bot. Come on in, the data's fine.
 
-User-agent: Googlebot
-# You're one of the good ones. Welcome.
+User-agent: *
 Allow: /
